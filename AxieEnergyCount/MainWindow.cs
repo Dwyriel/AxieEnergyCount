@@ -15,6 +15,7 @@ namespace AxieEnergyCount
     {
         List<Image> BackgroundImages = new List<Image>();
         int enemyEnergy = 3, wins = 0, counter = 0;
+        List<Label> customLabels = new List<Label>();
 
         //Set clock timer to render gif at 100% speed:
         private const int timerAccuracy = 10;
@@ -25,9 +26,31 @@ namespace AxieEnergyCount
 
         public MainWindow()
         {
+            SetupCustomLabels();
             SetStartAttributes();
             InitializeComponent();
             BackgroundSetup();
+        }
+
+        void SetupCustomLabels()
+        {
+            customLabels.Add(CreateCustomLabel("Some Text", 50, 150));
+            customLabels.Add(CreateCustomLabel("Some Text", 50, 111));
+        }
+
+        private Label CreateCustomLabel(string text, int posX, int posY)
+        {
+            BorderLabel label = new BorderLabel();
+            this.Controls.Add(label);
+            label.BackColor = Color.Transparent;
+            label.Font = new Font("Arial Black", 25F, FontStyle.Bold, GraphicsUnit.Point);
+            label.ForeColor = Color.White;
+            label.Text = text;
+            label.BorderColor = Color.Black;
+            label.BorderSize = 2.2f;
+            label.AutoSize = true;
+            label.Location = new Point(posX, posY);
+            return label;
         }
 
         void SetStartAttributes()
@@ -42,6 +65,8 @@ namespace AxieEnergyCount
         {
             AddImagesToList();
             PicBoxBG1.Image = BackgroundImages[counter];
+            foreach (Label label in customLabels)
+                label.Parent = PicBoxBG1;
         }
 
         void AddImagesToList()
