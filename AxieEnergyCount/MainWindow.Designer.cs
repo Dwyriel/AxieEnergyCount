@@ -73,14 +73,14 @@ namespace AxieEnergyCount
             // 
             this.BackgroundSubmenuBtn.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundSubmenuBtn.Name = "BackgroundSubmenuBtn";
-            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(138, 22);
             this.BackgroundSubmenuBtn.Text = "Background";
             this.BackgroundSubmenuBtn.Click += new System.EventHandler(this.BackgroundSubmenuBtn_Click);
             // 
             // exitSubmenuBtn
             // 
             this.exitSubmenuBtn.Name = "exitSubmenuBtn";
-            this.exitSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.exitSubmenuBtn.Size = new System.Drawing.Size(138, 22);
             this.exitSubmenuBtn.Text = "Exit";
             this.exitSubmenuBtn.Click += new System.EventHandler(this.exitSubmenuBtn_Click);
             // 
@@ -126,7 +126,7 @@ namespace AxieEnergyCount
             // 
             // PicBoxBG1
             // 
-            this.PicBoxBG1.Location = new System.Drawing.Point(0, 19);
+            this.PicBoxBG1.Location = new System.Drawing.Point(0, 21);
             this.PicBoxBG1.Name = "PicBoxBG1";
             this.PicBoxBG1.Size = new System.Drawing.Size(400, 400);
             this.PicBoxBG1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -137,7 +137,7 @@ namespace AxieEnergyCount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 419);
+            this.ClientSize = new System.Drawing.Size(400, 421);
             this.Controls.Add(this.BackgroundImage4);
             this.Controls.Add(this.BackgroundImage3);
             this.Controls.Add(this.BackgroundImage2);

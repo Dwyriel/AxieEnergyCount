@@ -27,7 +27,7 @@ namespace AxieEnergyCount
         {
             SetStartAttributes();
             InitializeComponent();
-            BackgroundSetup(); AddOneWin();
+            BackgroundSetup();
         }
 
         void SetStartAttributes()
