@@ -32,12 +32,20 @@ namespace AxieEnergyCount
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BackgroundSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetWhenWLSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.BackgroundImage4 = new System.Windows.Forms.PictureBox();
             this.BackgroundImage3 = new System.Windows.Forms.PictureBox();
             this.BackgroundImage2 = new System.Windows.Forms.PictureBox();
             this.BackgroundImage1 = new System.Windows.Forms.PictureBox();
             this.PicBoxBG1 = new System.Windows.Forms.PictureBox();
+            this.BtnNextTurn = new System.Windows.Forms.Button();
+            this.BtnMinusOneEnergy = new System.Windows.Forms.Button();
+            this.BtnPlusOneEnergy = new System.Windows.Forms.Button();
+            this.BtnNewGame = new System.Windows.Forms.Button();
+            this.BtnPlusWin = new System.Windows.Forms.Button();
+            this.BtnResetWin = new System.Windows.Forms.Button();
+            this.BtnMinusWin = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage3)).BeginInit();
@@ -63,7 +71,8 @@ namespace AxieEnergyCount
             // 
             this.OptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BackgroundSubmenuBtn,
-            this.exitSubmenuBtn});
+            this.ResetWhenWLSubmenuBtn,
+            this.ExitSubmenuBtn});
             this.OptionsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
             this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -73,16 +82,26 @@ namespace AxieEnergyCount
             // 
             this.BackgroundSubmenuBtn.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundSubmenuBtn.Name = "BackgroundSubmenuBtn";
-            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(138, 22);
+            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.BackgroundSubmenuBtn.Text = "Background";
             this.BackgroundSubmenuBtn.Click += new System.EventHandler(this.BackgroundSubmenuBtn_Click);
             // 
-            // exitSubmenuBtn
+            // ResetWhenWLSubmenuBtn
             // 
-            this.exitSubmenuBtn.Name = "exitSubmenuBtn";
-            this.exitSubmenuBtn.Size = new System.Drawing.Size(138, 22);
-            this.exitSubmenuBtn.Text = "Exit";
-            this.exitSubmenuBtn.Click += new System.EventHandler(this.exitSubmenuBtn_Click);
+            this.ResetWhenWLSubmenuBtn.Checked = true;
+            this.ResetWhenWLSubmenuBtn.CheckOnClick = true;
+            this.ResetWhenWLSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ResetWhenWLSubmenuBtn.Name = "ResetWhenWLSubmenuBtn";
+            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.ResetWhenWLSubmenuBtn.Text = "Reset When W/L";
+            this.ResetWhenWLSubmenuBtn.CheckedChanged += new System.EventHandler(this.ResetWhenWLSubmenuBtn_CheckedChanged);
+            // 
+            // ExitSubmenuBtn
+            // 
+            this.ExitSubmenuBtn.Name = "ExitSubmenuBtn";
+            this.ExitSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.ExitSubmenuBtn.Text = "Exit";
+            this.ExitSubmenuBtn.Click += new System.EventHandler(this.exitSubmenuBtn_Click);
             // 
             // BackgroundImage4
             // 
@@ -133,11 +152,95 @@ namespace AxieEnergyCount
             this.PicBoxBG1.TabIndex = 0;
             this.PicBoxBG1.TabStop = false;
             // 
+            // BtnNextTurn
+            // 
+            this.BtnNextTurn.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnNextTurn.Location = new System.Drawing.Point(273, 374);
+            this.BtnNextTurn.Name = "BtnNextTurn";
+            this.BtnNextTurn.Size = new System.Drawing.Size(120, 40);
+            this.BtnNextTurn.TabIndex = 3;
+            this.BtnNextTurn.Text = "Next Turn";
+            this.BtnNextTurn.UseVisualStyleBackColor = true;
+            this.BtnNextTurn.Click += new System.EventHandler(this.BtnNextTurn_Click);
+            // 
+            // BtnMinusOneEnergy
+            // 
+            this.BtnMinusOneEnergy.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnMinusOneEnergy.Location = new System.Drawing.Point(273, 334);
+            this.BtnMinusOneEnergy.Name = "BtnMinusOneEnergy";
+            this.BtnMinusOneEnergy.Size = new System.Drawing.Size(60, 40);
+            this.BtnMinusOneEnergy.TabIndex = 1;
+            this.BtnMinusOneEnergy.Text = "-1";
+            this.BtnMinusOneEnergy.UseVisualStyleBackColor = true;
+            this.BtnMinusOneEnergy.Click += new System.EventHandler(this.BtnMinusOneEnergy_Click);
+            // 
+            // BtnPlusOneEnergy
+            // 
+            this.BtnPlusOneEnergy.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnPlusOneEnergy.Location = new System.Drawing.Point(333, 334);
+            this.BtnPlusOneEnergy.Name = "BtnPlusOneEnergy";
+            this.BtnPlusOneEnergy.Size = new System.Drawing.Size(60, 40);
+            this.BtnPlusOneEnergy.TabIndex = 2;
+            this.BtnPlusOneEnergy.Text = "+1";
+            this.BtnPlusOneEnergy.UseVisualStyleBackColor = true;
+            this.BtnPlusOneEnergy.Click += new System.EventHandler(this.BtnPlusOneEnergy_Click);
+            // 
+            // BtnNewGame
+            // 
+            this.BtnNewGame.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnNewGame.Location = new System.Drawing.Point(213, 374);
+            this.BtnNewGame.Name = "BtnNewGame";
+            this.BtnNewGame.Size = new System.Drawing.Size(60, 40);
+            this.BtnNewGame.TabIndex = 4;
+            this.BtnNewGame.Text = "New";
+            this.BtnNewGame.UseVisualStyleBackColor = true;
+            this.BtnNewGame.Click += new System.EventHandler(this.BtnNewGame_Click);
+            // 
+            // BtnPlusWin
+            // 
+            this.BtnPlusWin.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnPlusWin.Location = new System.Drawing.Point(12, 106);
+            this.BtnPlusWin.Name = "BtnPlusWin";
+            this.BtnPlusWin.Size = new System.Drawing.Size(29, 36);
+            this.BtnPlusWin.TabIndex = 5;
+            this.BtnPlusWin.Text = "+";
+            this.BtnPlusWin.UseVisualStyleBackColor = true;
+            this.BtnPlusWin.Click += new System.EventHandler(this.BtnPlusWin_Click);
+            // 
+            // BtnResetWin
+            // 
+            this.BtnResetWin.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnResetWin.Location = new System.Drawing.Point(12, 176);
+            this.BtnResetWin.Name = "BtnResetWin";
+            this.BtnResetWin.Size = new System.Drawing.Size(29, 36);
+            this.BtnResetWin.TabIndex = 6;
+            this.BtnResetWin.Text = "R";
+            this.BtnResetWin.UseVisualStyleBackColor = true;
+            this.BtnResetWin.Click += new System.EventHandler(this.BtnResetWin_Click);
+            // 
+            // BtnMinusWin
+            // 
+            this.BtnMinusWin.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.BtnMinusWin.Location = new System.Drawing.Point(12, 141);
+            this.BtnMinusWin.Name = "BtnMinusWin";
+            this.BtnMinusWin.Size = new System.Drawing.Size(29, 36);
+            this.BtnMinusWin.TabIndex = 7;
+            this.BtnMinusWin.Text = "-";
+            this.BtnMinusWin.UseVisualStyleBackColor = true;
+            this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(400, 421);
+            this.Controls.Add(this.BtnMinusWin);
+            this.Controls.Add(this.BtnResetWin);
+            this.Controls.Add(this.BtnPlusWin);
+            this.Controls.Add(this.BtnNewGame);
+            this.Controls.Add(this.BtnPlusOneEnergy);
+            this.Controls.Add(this.BtnMinusOneEnergy);
+            this.Controls.Add(this.BtnNextTurn);
             this.Controls.Add(this.BackgroundImage4);
             this.Controls.Add(this.BackgroundImage3);
             this.Controls.Add(this.BackgroundImage2);
@@ -166,11 +269,19 @@ namespace AxieEnergyCount
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem OptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BackgroundSubmenuBtn;
-        private System.Windows.Forms.ToolStripMenuItem exitSubmenuBtn;
+        private System.Windows.Forms.ToolStripMenuItem ExitSubmenuBtn;
         private System.Windows.Forms.PictureBox BackgroundImage1;
         private System.Windows.Forms.PictureBox BackgroundImage2;
         private System.Windows.Forms.PictureBox BackgroundImage3;
         private System.Windows.Forms.PictureBox BackgroundImage4;
+        private System.Windows.Forms.Button BtnNextTurn;
+        private System.Windows.Forms.ToolStripMenuItem ResetWhenWLSubmenuBtn;
+        private System.Windows.Forms.Button BtnMinusOneEnergy;
+        private System.Windows.Forms.Button BtnPlusOneEnergy;
+        private System.Windows.Forms.Button BtnNewGame;
+        private System.Windows.Forms.Button BtnPlusWin;
+        private System.Windows.Forms.Button BtnResetWin;
+        private System.Windows.Forms.Button BtnMinusWin;
     }
 }
 
