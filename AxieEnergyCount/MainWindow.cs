@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -13,8 +13,9 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        List<Image> BackgroundImages = new List<Image>();
+        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
         int enemyEnergy = 3, wins = 0, counter = 0;
+        List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
 
         //Set clock timer to render gif at 100% speed:
@@ -29,13 +30,18 @@ namespace AxieEnergyCount
             SetupCustomLabels();
             SetStartAttributes();
             InitializeComponent();
+            AddImagesToList();
+            LoadCache();
             BackgroundSetup();
         }
 
+        //Methods
         void SetupCustomLabels()
         {
-            customLabels.Add(CreateCustomLabel("Some Text", 50, 150));
-            customLabels.Add(CreateCustomLabel("Some Text", 50, 111));
+            customLabels.Add(CreateCustomLabel("Enemy Energy:", 15, 5));
+            customLabels.Add(CreateCustomLabel("Wins:", 15, 40));
+            customLabels.Add(CreateCustomLabel("3", 295, 7));
+            customLabels.Add(CreateCustomLabel("0", 130, 42));
         }
 
         private Label CreateCustomLabel(string text, int posX, int posY)
@@ -43,7 +49,7 @@ namespace AxieEnergyCount
             BorderLabel label = new BorderLabel();
             this.Controls.Add(label);
             label.BackColor = Color.Transparent;
-            label.Font = new Font("Arial Black", 25F, FontStyle.Bold, GraphicsUnit.Point);
+            label.Font = new Font("Arial Black", 32F, FontStyle.Bold, GraphicsUnit.World);
             label.ForeColor = Color.White;
             label.Text = text;
             label.BorderColor = Color.Black;
@@ -61,12 +67,30 @@ namespace AxieEnergyCount
             MaximizeBox = false;
         }
 
+        void LoadCache()
+        {
+            CacheController.GetCache();
+            if (CacheController.IsEmpty())
+            {
+                CacheController.cache.Add(counter.ToString());
+                CacheController.cache.Add(ResetWhenWLSubmenuBtn.Checked.ToString());
+                CacheController.Save();
+                return;
+            }
+            counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
+            ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultChecked) ? resultChecked : true;
+            CacheController.Save();
+        }
+
         void BackgroundSetup()
         {
-            AddImagesToList();
             PicBoxBG1.Image = BackgroundImages[counter];
+            int tabIndex = 50;
             foreach (Label label in customLabels)
+            {
                 label.Parent = PicBoxBG1;
+                label.TabIndex = tabIndex++;
+            }
         }
 
         void AddImagesToList()
@@ -77,36 +101,23 @@ namespace AxieEnergyCount
             BackgroundImages.Add(BackgroundImage4.Image);
         }
 
-        private void AddOne()
+        private void ShowNewNumber()
         {
-            enemyEnergy = Clamp(++enemyEnergy, 0, 10);
+            customLabels[2].Text = enemyEnergy.ToString();
+            customLabels[3].Text = wins.ToString();
         }
 
-        private void MinusOne()
+        private void ResetGame()
         {
-            enemyEnergy = Clamp(--enemyEnergy, 0, 10);
+            enemyEnergy = StartGameEnergy;
         }
 
-        private void NextTurn()
+        private int Clamp(int number, int min, int max)
         {
-            enemyEnergy = Clamp(enemyEnergy + 2, 0, 10);
+            return (number < min) ? min : (number > max) ? max : number;
         }
 
-        private void NewGame()
-        {
-            enemyEnergy = 3;
-        }
-
-        private void AddOneWin()
-        {
-            wins = Clamp(++wins, 0, int.MaxValue);
-        }
-
-        private void MinusOneWin()
-        {
-            wins = Clamp(--wins, 0, int.MaxValue);
-        }
-
+        //Events
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             timeEndPeriod(timerAccuracy);
@@ -118,16 +129,67 @@ namespace AxieEnergyCount
             if (counter >= BackgroundImages.Count)
                 counter = 0;
             PicBoxBG1.Image = BackgroundImages[counter];
+            CacheController.cache[0] = counter.ToString();
+            CacheController.Save();
+        }
+
+        private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
+            CacheController.Save();
+        }
+
+        private void BtnMinusOneEnergy_Click(object sender, EventArgs e)
+        {
+            enemyEnergy = Clamp(--enemyEnergy, MinEnergy, MaxEnergy);
+            ShowNewNumber();
+        }
+
+        private void BtnPlusOneEnergy_Click(object sender, EventArgs e)
+        {
+            enemyEnergy = Clamp(++enemyEnergy, MinEnergy, MaxEnergy);
+            ShowNewNumber();
+        }
+
+        private void BtnNextTurn_Click(object sender, EventArgs e)
+        {
+            enemyEnergy = Clamp(enemyEnergy + EnergyPerTurn, MinEnergy, MaxEnergy);
+            ShowNewNumber();
+        }
+
+        private void BtnNewGame_Click(object sender, EventArgs e)
+        {
+            ResetGame();
+            ShowNewNumber();
+        }
+
+        private void BtnPlusWin_Click(object sender, EventArgs e)
+        {
+            wins = Clamp(++wins, 0, int.MaxValue);
+            if (ResetWhenWLSubmenuBtn.Checked)
+                ResetGame();
+            ShowNewNumber();
+        }
+
+        private void BtnMinusWin_Click(object sender, EventArgs e)
+        {
+            wins = Clamp(--wins, 0, int.MaxValue);
+            if (ResetWhenWLSubmenuBtn.Checked)
+                ResetGame();
+            ShowNewNumber();
+        }
+
+        private void BtnResetWin_Click(object sender, EventArgs e)
+        {
+            wins = 0;
+            if (ResetWhenWLSubmenuBtn.Checked)
+                ResetGame();
+            ShowNewNumber();
         }
 
         private void exitSubmenuBtn_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private int Clamp(int number, int min, int max)
-        {
-            return (number < min) ? min : (number > max) ? max : number;
         }
     }
 }
