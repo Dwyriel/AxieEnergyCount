@@ -73,6 +73,8 @@ namespace AxieEnergyCount
             }
             counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
             ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultChecked) ? resultChecked : true;
+            CacheController.cache[0] = counter.ToString();
+            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
             CacheController.Save();
         }
 
