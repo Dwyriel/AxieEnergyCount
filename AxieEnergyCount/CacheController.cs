@@ -14,7 +14,7 @@ namespace AxieEnergyCount
         public static void GetCache()
         {
             bool loaded = false;
-            path = Path.GetDirectoryName(Application.ExecutablePath) + @"\cache.dwy";
+            path = Path.GetDirectoryName(Application.ExecutablePath) + @"\cache.xml";
             if (File.Exists(path))
                 loaded = Load();
             if (loaded)
@@ -53,6 +53,7 @@ namespace AxieEnergyCount
                 sw.WriteLine("[" + DateTime.Now + "] " + e.Message);
                 sw.Flush();
                 sw.Close();
+                MessageBox.Show("An error occurred, check log.txt file.", "Error");
                 return false;
             }
             finally
