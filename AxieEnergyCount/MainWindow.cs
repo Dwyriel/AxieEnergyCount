@@ -7,8 +7,8 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
-        int enemyEnergy = 3, wins = 0, counter = 0;
+        readonly int StartGameEnergy = 3, StartGameCards = 6, EnergyPerTurn = 2, CardsPerTurn = 3, MinEnergy = 0, MaxEnergy = 10, MinCards = 0, MaxCards = 24;
+        int enemyCards = 6, enemyEnergy = 3, wins = 0, counter = 0;
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
 
@@ -32,18 +32,25 @@ namespace AxieEnergyCount
         //Methods
         void SetupCustomLabels()
         {
-            customLabels.Add(CreateCustomLabel("Enemy Energy:", 15, 5));
-            customLabels.Add(CreateCustomLabel("Wins:", 15, 40));
-            customLabels.Add(CreateCustomLabel("3", 295, 7));
-            customLabels.Add(CreateCustomLabel("0", 130, 42));
+            //Static Top Labels:
+            customLabels.Add(CreateCustomLabel("Enemy Cards:", 15, 3));
+            customLabels.Add(CreateCustomLabel("Enemy Energy:", 15, 41));
+            customLabels.Add(CreateCustomLabel("Wins:", 15, 77));
+            //Variable Top Label (Cards, Energy, Wins respectively):
+            customLabels.Add(CreateCustomLabel("6", 260, 5));
+            customLabels.Add(CreateCustomLabel("3", 280, 43));
+            customLabels.Add(CreateCustomLabel("0", 122, 79));
+            //Static Botton Labels:
+            customLabels.Add(CreateCustomLabel("Cards", 240, 258, 24));
+            customLabels.Add(CreateCustomLabel("Energy", 130, 258, 24));
         }
 
-        private Label CreateCustomLabel(string text, int posX, int posY)
+        private Label CreateCustomLabel(string text, int posX, int posY, float fontSize = 30f)
         {
             BorderLabel label = new BorderLabel();
             this.Controls.Add(label);
             label.BackColor = Color.Transparent;
-            label.Font = new Font("Arial Black", 32F, FontStyle.Bold, GraphicsUnit.World);
+            label.Font = new Font("Arial Black", fontSize, FontStyle.Bold, GraphicsUnit.World);
             label.ForeColor = Color.White;
             label.Text = text;
             label.BorderColor = Color.Black;
@@ -59,7 +66,16 @@ namespace AxieEnergyCount
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             TopMost = true;
+            Icon = Properties.Resources.vanilla_icon;
             MaximizeBox = false;
+        }
+
+        void AddImagesToList()
+        {
+            BackgroundImages.Add(BackgroundImage1.Image);
+            BackgroundImages.Add(BackgroundImage2.Image);
+            BackgroundImages.Add(BackgroundImage3.Image);
+            BackgroundImages.Add(BackgroundImage4.Image);
         }
 
         void LoadCache()
@@ -95,23 +111,17 @@ namespace AxieEnergyCount
             }
         }
 
-        void AddImagesToList()
-        {
-            BackgroundImages.Add(BackgroundImage1.Image);
-            BackgroundImages.Add(BackgroundImage2.Image);
-            BackgroundImages.Add(BackgroundImage3.Image);
-            BackgroundImages.Add(BackgroundImage4.Image);
-        }
-
         private void ShowNewNumber()
         {
-            customLabels[2].Text = enemyEnergy.ToString();
-            customLabels[3].Text = wins.ToString();
+            customLabels[3].Text = enemyCards.ToString();
+            customLabels[4].Text = enemyEnergy.ToString();
+            customLabels[5].Text = wins.ToString();
         }
 
         private void ResetGame()
         {
             enemyEnergy = StartGameEnergy;
+            enemyCards = StartGameCards;
         }
 
         private int Clamp(int number, int min, int max)
@@ -160,9 +170,22 @@ namespace AxieEnergyCount
             ShowNewNumber();
         }
 
+        private void BtnPlusOneCard_Click(object sender, EventArgs e)
+        {
+            enemyCards = Clamp(++enemyCards, MinCards, MaxCards);
+            ShowNewNumber();
+        }
+
+        private void BtnMinusOneCard_Click(object sender, EventArgs e)
+        {
+            enemyCards = Clamp(--enemyCards, MinCards, MaxCards);
+            ShowNewNumber();
+        }
+
         private void BtnNextTurn_Click(object sender, EventArgs e)
         {
             enemyEnergy = Clamp(enemyEnergy + EnergyPerTurn, MinEnergy, MaxEnergy);
+            enemyCards = Clamp(enemyCards + CardsPerTurn, MinCards, MaxCards);
             ShowNewNumber();
         }
 
@@ -196,7 +219,7 @@ namespace AxieEnergyCount
             ShowNewNumber();
         }
 
-        private void exitSubmenuBtn_Click(object sender, EventArgs e)
+        private void ExitSubmenuBtn_Click(object sender, EventArgs e)
         {
             this.Close();
         }
