@@ -46,6 +46,7 @@ namespace AxieEnergyCount
             this.BtnPlusWin = new System.Windows.Forms.Button();
             this.BtnResetWin = new System.Windows.Forms.Button();
             this.BtnMinusWin = new System.Windows.Forms.Button();
+            this.AlwaysOnTopSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage3)).BeginInit();
@@ -72,6 +73,7 @@ namespace AxieEnergyCount
             this.OptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BackgroundSubmenuBtn,
             this.ResetWhenWLSubmenuBtn,
+            this.AlwaysOnTopSubmenuBtn,
             this.ExitSubmenuBtn});
             this.OptionsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
@@ -229,6 +231,16 @@ namespace AxieEnergyCount
             this.BtnMinusWin.UseVisualStyleBackColor = true;
             this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
             // 
+            // AlwaysOnTopSubmenuBtn
+            // 
+            this.AlwaysOnTopSubmenuBtn.Checked = true;
+            this.AlwaysOnTopSubmenuBtn.CheckOnClick = true;
+            this.AlwaysOnTopSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AlwaysOnTopSubmenuBtn.Name = "AlwaysOnTopSubmenuBtn";
+            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.AlwaysOnTopSubmenuBtn.Text = "Always on Top";
+            this.AlwaysOnTopSubmenuBtn.CheckedChanged += new System.EventHandler(this.AlwaysOnTopSubmenuBtn_CheckedChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,6 +294,7 @@ namespace AxieEnergyCount
         private System.Windows.Forms.Button BtnPlusWin;
         private System.Windows.Forms.Button BtnResetWin;
         private System.Windows.Forms.Button BtnMinusWin;
+        private System.Windows.Forms.ToolStripMenuItem AlwaysOnTopSubmenuBtn;
     }
 }
 

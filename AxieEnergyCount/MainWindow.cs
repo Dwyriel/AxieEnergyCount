@@ -58,6 +58,7 @@ namespace AxieEnergyCount
             timeBeginPeriod(timerAccuracy);
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            TopMost = true;
             MaximizeBox = false;
         }
 
@@ -68,15 +69,18 @@ namespace AxieEnergyCount
             {
                 CacheController.cache.Add(counter.ToString());
                 CacheController.cache.Add(ResetWhenWLSubmenuBtn.Checked.ToString());
+                CacheController.cache.Add(AlwaysOnTopSubmenuBtn.Checked.ToString());
                 CacheController.Save();
                 return;
             }
-            while (CacheController.cache.Count < 2)
+            while (CacheController.cache.Count < 3)
                 CacheController.cache.Add("");
             counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
-            ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultChecked) ? resultChecked : true;
+            ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultResetWhenWL) ? resultResetWhenWL : true;
+            AlwaysOnTopSubmenuBtn.Checked = bool.TryParse(CacheController.cache[2], out bool resultAlwaysOnTop) ? resultAlwaysOnTop : true;
             CacheController.cache[0] = counter.ToString();
             CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
+            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
             CacheController.Save();
         }
 
@@ -134,6 +138,13 @@ namespace AxieEnergyCount
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
             CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
+            CacheController.Save();
+        }
+
+        private void AlwaysOnTopSubmenuBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            TopMost = AlwaysOnTopSubmenuBtn.Checked;
+            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
             CacheController.Save();
         }
 
