@@ -32,18 +32,18 @@ namespace AxieEnergyCount
         //Methods
         void SetupCustomLabels()
         {
-            customLabels.Add(CreateCustomLabel("Enemy Energy:", 15, 5));
-            customLabels.Add(CreateCustomLabel("Wins:", 15, 40));
-            customLabels.Add(CreateCustomLabel("3", 295, 7));
-            customLabels.Add(CreateCustomLabel("0", 130, 42));
+            customLabels.Add(CreateCustomLabel("Enemy Energy:", 10, 3));
+            customLabels.Add(CreateCustomLabel("Wins:", 10, 40));
+            customLabels.Add(CreateCustomLabel("3", 275, 5));
+            customLabels.Add(CreateCustomLabel("0", 117, 42));
         }
 
-        private Label CreateCustomLabel(string text, int posX, int posY)
+        private Label CreateCustomLabel(string text, int posX, int posY, float fontSize = 30f)
         {
             BorderLabel label = new BorderLabel();
             this.Controls.Add(label);
             label.BackColor = Color.Transparent;
-            label.Font = new Font("Arial Black", 32F, FontStyle.Bold, GraphicsUnit.World);
+            label.Font = new Font("Arial Black", fontSize, FontStyle.Bold, GraphicsUnit.World);
             label.ForeColor = Color.White;
             label.Text = text;
             label.BorderColor = Color.Black;
@@ -60,6 +60,15 @@ namespace AxieEnergyCount
             FormBorderStyle = FormBorderStyle.FixedSingle;
             TopMost = true;
             MaximizeBox = false;
+            Icon = Properties.Resources.vanilla_icon;
+        }
+
+        void AddImagesToList()
+        {
+            BackgroundImages.Add(BackgroundImage1.Image);
+            BackgroundImages.Add(BackgroundImage2.Image);
+            BackgroundImages.Add(BackgroundImage3.Image);
+            BackgroundImages.Add(BackgroundImage4.Image);
         }
 
         void LoadCache()
@@ -93,14 +102,6 @@ namespace AxieEnergyCount
                 label.Parent = PicBoxBG1;
                 label.TabIndex = tabIndex++;
             }
-        }
-
-        void AddImagesToList()
-        {
-            BackgroundImages.Add(BackgroundImage1.Image);
-            BackgroundImages.Add(BackgroundImage2.Image);
-            BackgroundImages.Add(BackgroundImage3.Image);
-            BackgroundImages.Add(BackgroundImage4.Image);
         }
 
         private void ShowNewNumber()
@@ -196,7 +197,7 @@ namespace AxieEnergyCount
             ShowNewNumber();
         }
 
-        private void exitSubmenuBtn_Click(object sender, EventArgs e)
+        private void ExitSubmenuBtn_Click(object sender, EventArgs e)
         {
             this.Close();
         }
