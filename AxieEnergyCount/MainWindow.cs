@@ -9,7 +9,6 @@ namespace AxieEnergyCount
     {
         readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
         int enemyEnergy = 3, wins = 0;
-        Point startPos = new Point(300, 300);
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
 
@@ -111,6 +110,10 @@ namespace AxieEnergyCount
         //Events
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            if(CacheController.config.startPos.X < 0 || CacheController.config.startPos.X > Screen.PrimaryScreen.Bounds.Width - 345)
+                CacheController.config.startPos.X = 300;
+            if (CacheController.config.startPos.Y < 0 || CacheController.config.startPos.Y > Screen.PrimaryScreen.Bounds.Height - 400)
+                CacheController.config.startPos.Y = 300;
             Location = CacheController.config.startPos;
         }
 
