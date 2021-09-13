@@ -7,8 +7,9 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, StartGameCards = 6, EnergyPerTurn = 2, CardsPerTurn = 3, MinEnergy = 0, MaxEnergy = 10, MinCards = 0, MaxCards = 24;
-        int enemyCards = 6, enemyEnergy = 3, wins = 0, counter = 0;
+        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        int enemyEnergy = 3, wins = 0;
+        Point startPos = new Point(300, 300);
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
 
@@ -32,17 +33,10 @@ namespace AxieEnergyCount
         //Methods
         void SetupCustomLabels()
         {
-            //Static Top Labels:
-            customLabels.Add(CreateCustomLabel("Enemy Cards:", 15, 3));
-            customLabels.Add(CreateCustomLabel("Enemy Energy:", 15, 41));
-            customLabels.Add(CreateCustomLabel("Wins:", 15, 77));
-            //Variable Top Label (Cards, Energy, Wins respectively):
-            customLabels.Add(CreateCustomLabel("6", 260, 5));
-            customLabels.Add(CreateCustomLabel("3", 280, 43));
-            customLabels.Add(CreateCustomLabel("0", 122, 79));
-            //Static Botton Labels:
-            customLabels.Add(CreateCustomLabel("Cards", 240, 258, 24));
-            customLabels.Add(CreateCustomLabel("Energy", 130, 258, 24));
+            customLabels.Add(CreateCustomLabel("Enemy Energy:", 10, 3));
+            customLabels.Add(CreateCustomLabel("Wins:", 10, 40));
+            customLabels.Add(CreateCustomLabel("3", 275, 5));
+            customLabels.Add(CreateCustomLabel("0", 117, 42));
         }
 
         private Label CreateCustomLabel(string text, int posX, int posY, float fontSize = 30f)
@@ -66,8 +60,8 @@ namespace AxieEnergyCount
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             TopMost = true;
-            Icon = Properties.Resources.vanilla_icon;
             MaximizeBox = false;
+            Icon = Properties.Resources.vanilla_icon;
         }
 
         void AddImagesToList()
@@ -81,28 +75,15 @@ namespace AxieEnergyCount
         void LoadCache()
         {
             CacheController.GetCache();
-            if (CacheController.IsEmpty())
-            {
-                CacheController.cache.Add(counter.ToString());
-                CacheController.cache.Add(ResetWhenWLSubmenuBtn.Checked.ToString());
-                CacheController.cache.Add(AlwaysOnTopSubmenuBtn.Checked.ToString());
-                CacheController.Save();
-                return;
-            }
-            while (CacheController.cache.Count < 3)
-                CacheController.cache.Add("");
-            counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
-            ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultResetWhenWL) ? resultResetWhenWL : true;
-            AlwaysOnTopSubmenuBtn.Checked = bool.TryParse(CacheController.cache[2], out bool resultAlwaysOnTop) ? resultAlwaysOnTop : true;
-            CacheController.cache[0] = counter.ToString();
-            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
-            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
+            ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
+            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
+            startPos = CacheController.config.startPos;
             CacheController.Save();
         }
 
         void BackgroundSetup()
         {
-            PicBoxBG1.Image = BackgroundImages[counter];
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -113,15 +94,13 @@ namespace AxieEnergyCount
 
         private void ShowNewNumber()
         {
-            customLabels[3].Text = enemyCards.ToString();
-            customLabels[4].Text = enemyEnergy.ToString();
-            customLabels[5].Text = wins.ToString();
+            customLabels[2].Text = enemyEnergy.ToString();
+            customLabels[3].Text = wins.ToString();
         }
 
         private void ResetGame()
         {
             enemyEnergy = StartGameEnergy;
-            enemyCards = StartGameCards;
         }
 
         private int Clamp(int number, int min, int max)
@@ -130,31 +109,37 @@ namespace AxieEnergyCount
         }
 
         //Events
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            Location = startPos;
+        }
+
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            CacheController.config.startPos = Location;
+            CacheController.Save();
             timeEndPeriod(timerAccuracy);
         }
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            counter++;
-            if (counter >= BackgroundImages.Count)
-                counter = 0;
-            PicBoxBG1.Image = BackgroundImages[counter];
-            CacheController.cache[0] = counter.ToString();
+            CacheController.config.counter++;
+            if (CacheController.config.counter >= BackgroundImages.Count)
+                CacheController.config.counter = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
             CacheController.Save();
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
-            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
+            CacheController.config.resetWhenWL = ResetWhenWLSubmenuBtn.Checked;
             CacheController.Save();
         }
 
         private void AlwaysOnTopSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = AlwaysOnTopSubmenuBtn.Checked;
-            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
+            CacheController.config.alwaysOnTop = AlwaysOnTopSubmenuBtn.Checked;
             CacheController.Save();
         }
 
@@ -170,22 +155,9 @@ namespace AxieEnergyCount
             ShowNewNumber();
         }
 
-        private void BtnPlusOneCard_Click(object sender, EventArgs e)
-        {
-            enemyCards = Clamp(++enemyCards, MinCards, MaxCards);
-            ShowNewNumber();
-        }
-
-        private void BtnMinusOneCard_Click(object sender, EventArgs e)
-        {
-            enemyCards = Clamp(--enemyCards, MinCards, MaxCards);
-            ShowNewNumber();
-        }
-
         private void BtnNextTurn_Click(object sender, EventArgs e)
         {
             enemyEnergy = Clamp(enemyEnergy + EnergyPerTurn, MinEnergy, MaxEnergy);
-            enemyCards = Clamp(enemyCards + CardsPerTurn, MinCards, MaxCards);
             ShowNewNumber();
         }
 

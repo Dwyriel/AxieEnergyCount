@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -8,7 +9,7 @@ namespace AxieEnergyCount
 {
     static class CacheController
     {
-        public static Collection<string> cache;
+        public static Configs config ;
         private static string path;
 
         public static void GetCache()
@@ -19,32 +20,28 @@ namespace AxieEnergyCount
                 loaded = Load();
             if (loaded)
                 return;
-            cache = new Collection<string>();
+            config = new Configs();
         }
 
-        public static bool IsEmpty()
-        {
-            return cache.Count < 1;
-        }
 
         public static void Save()
         {
             FileStream outFile = File.Create(path);
-            XmlSerializer format = new XmlSerializer(typeof(Collection<string>));
-            format.Serialize(outFile, cache);
+            XmlSerializer format = new XmlSerializer(typeof(Configs));
+            format.Serialize(outFile, config);
             outFile.Close();
         }
 
         public static bool Load()
         {
-            XmlSerializer format = new XmlSerializer(typeof(Collection<string>));
+            XmlSerializer format = new XmlSerializer(typeof(Configs));
             FileStream inFile = new FileStream(path, FileMode.Open);
             try
             {
                 byte[] buffer = new byte[inFile.Length];
                 inFile.Read(buffer, 0, (int)inFile.Length);
                 MemoryStream stream = new MemoryStream(buffer);
-                cache = (Collection<string>)format.Deserialize(stream);
+                config = (Configs)format.Deserialize(stream);
                 return true;
             }
             catch (Exception e)
@@ -61,5 +58,12 @@ namespace AxieEnergyCount
                 inFile.Close();
             }
         }
+    }
+
+    public class Configs
+    {
+        public int counter = 0;
+        public bool resetWhenWL = true, alwaysOnTop = true;
+        public Point startPos = new Point(300, 300);
     }
 }
