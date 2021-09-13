@@ -8,9 +8,11 @@ namespace AxieEnergyCount
     public partial class MainWindow : Form
     {
         readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        readonly Size defaultSize = new Size(356, 400), noBackgroundSize = new Size(356, 202);
         int enemyEnergy = 3, wins = 0;
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
+        List<Point> buttonsPosition = new List<Point>();
 
         //Set clock timer to render gif at 100% speed:
         private const int timerAccuracy = 10;
@@ -24,7 +26,7 @@ namespace AxieEnergyCount
             SetupCustomLabels();
             SetStartAttributes();
             InitializeComponent();
-            AddImagesToList();
+            SetupLists();
             LoadCache();
             BackgroundSetup();
         }
@@ -63,19 +65,34 @@ namespace AxieEnergyCount
             Icon = Properties.Resources.vanilla_icon;
         }
 
-        void AddImagesToList()
+        void SetupLists()
         {
+            //BackgroundImages
             BackgroundImages.Add(BackgroundImage1.Image);
             BackgroundImages.Add(BackgroundImage2.Image);
             BackgroundImages.Add(BackgroundImage3.Image);
             BackgroundImages.Add(BackgroundImage4.Image);
+            //ButtonDefaultPos
+            buttonsPosition.Add(new Point(219, 280));
+            buttonsPosition.Add(new Point(279, 280));
+            buttonsPosition.Add(new Point(219, 320));
+            buttonsPosition.Add(new Point(159, 320));
+            buttonsPosition.Add(new Point(8, 106));
+            buttonsPosition.Add(new Point(8, 141));
+            buttonsPosition.Add(new Point(8, 176));
+            //ButtonNoImagePos
+            buttonsPosition.Add(new Point(219, 82));
+            buttonsPosition.Add(new Point(279, 82));
+            buttonsPosition.Add(new Point(219, 122));
+            buttonsPosition.Add(new Point(159, 122));
+            buttonsPosition.Add(new Point(8, 125));
+            buttonsPosition.Add(new Point(36, 125));
+            buttonsPosition.Add(new Point(64, 125));
         }
 
         void LoadCache()
         {
             CacheController.GetCache();
-            ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
-            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
             CacheController.Save();
         }
 
@@ -107,8 +124,7 @@ namespace AxieEnergyCount
             return (number < min) ? min : (number > max) ? max : number;
         }
 
-        //Events
-        private void MainWindow_Load(object sender, EventArgs e)
+        private void SetStartPos()
         {
             Screen lastOpenedScreen = Screen.FromPoint(CacheController.config.startPos);
             int lowerX = lastOpenedScreen.Bounds.X;
@@ -118,6 +134,39 @@ namespace AxieEnergyCount
             if (CacheController.config.startPos.X < lowerX || CacheController.config.startPos.X > upperX || CacheController.config.startPos.Y < lowerY || CacheController.config.startPos.Y > upperY)
                 CacheController.config.startPos = CacheController.defaultConfig.startPos;
             Location = CacheController.config.startPos;
+        }
+
+        private void LoadVariables()
+        {
+            ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
+            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
+            NoImageSubmenuBtn.Checked = CacheController.config.noBackground;
+        }
+
+        private void SetButtonPos(bool toDefaultPos)
+        {
+            int startIndex = (toDefaultPos) ? 0 : 7;
+            BtnMinusOneEnergy.Location = buttonsPosition[startIndex];
+            BtnPlusOneEnergy.Location = buttonsPosition[++startIndex];
+            BtnNextTurn.Location = buttonsPosition[++startIndex];
+            BtnNewGame.Location = buttonsPosition[++startIndex];
+            BtnPlusWin.Location = buttonsPosition[++startIndex];
+            BtnMinusWin.Location = buttonsPosition[++startIndex];
+            BtnResetWin.Location = buttonsPosition[++startIndex];
+        }
+
+        private void ChangeSizeAndBG(bool toDefaultValue)
+        {
+            PicBoxBG1.Image = toDefaultValue ? BackgroundImages[CacheController.config.backgroundImage] : Properties.Resources.NoBG;
+            Size = toDefaultValue ? defaultSize : noBackgroundSize;
+            Refresh();
+        }
+
+        //Events
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            SetStartPos();
+            LoadVariables();
         }
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -146,6 +195,15 @@ namespace AxieEnergyCount
         {
             TopMost = AlwaysOnTopSubmenuBtn.Checked;
             CacheController.config.alwaysOnTop = AlwaysOnTopSubmenuBtn.Checked;
+            CacheController.Save();
+        }
+
+        private void NoImageSubmenuBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            BackgroundSubmenuBtn.Enabled = !NoImageSubmenuBtn.Checked;
+            SetButtonPos(!NoImageSubmenuBtn.Checked);
+            ChangeSizeAndBG(!NoImageSubmenuBtn.Checked);
+            CacheController.config.noBackground = NoImageSubmenuBtn.Checked;
             CacheController.Save();
         }
 

@@ -34,6 +34,7 @@ namespace AxieEnergyCount
             this.BackgroundSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetWhenWLSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.AlwaysOnTopSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.NoImageSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.BackgroundImage4 = new System.Windows.Forms.PictureBox();
             this.BackgroundImage3 = new System.Windows.Forms.PictureBox();
@@ -74,6 +75,7 @@ namespace AxieEnergyCount
             this.BackgroundSubmenuBtn,
             this.ResetWhenWLSubmenuBtn,
             this.AlwaysOnTopSubmenuBtn,
+            this.NoImageSubmenuBtn,
             this.ExitSubmenuBtn});
             this.OptionsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
@@ -84,7 +86,7 @@ namespace AxieEnergyCount
             // 
             this.BackgroundSubmenuBtn.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundSubmenuBtn.Name = "BackgroundSubmenuBtn";
-            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.BackgroundSubmenuBtn.Text = "Background";
             this.BackgroundSubmenuBtn.Click += new System.EventHandler(this.BackgroundSubmenuBtn_Click);
             // 
@@ -94,7 +96,7 @@ namespace AxieEnergyCount
             this.ResetWhenWLSubmenuBtn.CheckOnClick = true;
             this.ResetWhenWLSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ResetWhenWLSubmenuBtn.Name = "ResetWhenWLSubmenuBtn";
-            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.ResetWhenWLSubmenuBtn.Text = "Reset When W/L";
             this.ResetWhenWLSubmenuBtn.CheckedChanged += new System.EventHandler(this.ResetWhenWLSubmenuBtn_CheckedChanged);
             // 
@@ -104,14 +106,22 @@ namespace AxieEnergyCount
             this.AlwaysOnTopSubmenuBtn.CheckOnClick = true;
             this.AlwaysOnTopSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AlwaysOnTopSubmenuBtn.Name = "AlwaysOnTopSubmenuBtn";
-            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.AlwaysOnTopSubmenuBtn.Text = "Always on Top";
             this.AlwaysOnTopSubmenuBtn.CheckedChanged += new System.EventHandler(this.AlwaysOnTopSubmenuBtn_CheckedChanged);
+            // 
+            // NoImageSubmenuBtn
+            // 
+            this.NoImageSubmenuBtn.CheckOnClick = true;
+            this.NoImageSubmenuBtn.Name = "NoImageSubmenuBtn";
+            this.NoImageSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.NoImageSubmenuBtn.Text = "No Background";
+            this.NoImageSubmenuBtn.CheckedChanged += new System.EventHandler(this.NoImageSubmenuBtn_CheckedChanged);
             // 
             // ExitSubmenuBtn
             // 
             this.ExitSubmenuBtn.Name = "ExitSubmenuBtn";
-            this.ExitSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.ExitSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.ExitSubmenuBtn.Text = "Exit";
             this.ExitSubmenuBtn.Click += new System.EventHandler(this.ExitSubmenuBtn_Click);
             // 
@@ -225,7 +235,7 @@ namespace AxieEnergyCount
             this.BtnResetWin.Location = new System.Drawing.Point(8, 176);
             this.BtnResetWin.Name = "BtnResetWin";
             this.BtnResetWin.Size = new System.Drawing.Size(29, 36);
-            this.BtnResetWin.TabIndex = 6;
+            this.BtnResetWin.TabIndex = 7;
             this.BtnResetWin.Text = "R";
             this.BtnResetWin.UseVisualStyleBackColor = true;
             this.BtnResetWin.Click += new System.EventHandler(this.BtnResetWin_Click);
@@ -236,7 +246,7 @@ namespace AxieEnergyCount
             this.BtnMinusWin.Location = new System.Drawing.Point(8, 141);
             this.BtnMinusWin.Name = "BtnMinusWin";
             this.BtnMinusWin.Size = new System.Drawing.Size(29, 36);
-            this.BtnMinusWin.TabIndex = 7;
+            this.BtnMinusWin.TabIndex = 6;
             this.BtnMinusWin.Text = "-";
             this.BtnMinusWin.UseVisualStyleBackColor = true;
             this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
@@ -296,6 +306,7 @@ namespace AxieEnergyCount
         private System.Windows.Forms.Button BtnResetWin;
         private System.Windows.Forms.Button BtnMinusWin;
         private System.Windows.Forms.ToolStripMenuItem AlwaysOnTopSubmenuBtn;
+        private System.Windows.Forms.ToolStripMenuItem NoImageSubmenuBtn;
     }
 }
 

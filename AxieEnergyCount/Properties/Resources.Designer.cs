@@ -83,6 +83,16 @@ namespace AxieEnergyCount.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap NoBG {
+            get {
+                object obj = ResourceManager.GetObject("NoBG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap seraph_of_the_end_stare {
             get {
                 object obj = ResourceManager.GetObject("seraph-of-the-end-stare", resourceCulture);

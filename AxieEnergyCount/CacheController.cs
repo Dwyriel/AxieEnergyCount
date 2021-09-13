@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
@@ -16,7 +15,7 @@ namespace AxieEnergyCount
         public static void GetCache()
         {
             bool loaded = false;
-            path = Path.GetDirectoryName(Application.ExecutablePath) + @"\cache.xml";
+            path = Path.GetDirectoryName(Application.ExecutablePath) + @"\AxieEnergyCount.ini";
             if (File.Exists(path))
                 loaded = Load();
             if (loaded)
@@ -64,7 +63,7 @@ namespace AxieEnergyCount
     public class Configs
     {
         public int backgroundImage = 0;
-        public bool resetWhenWL = true, alwaysOnTop = true;
+        public bool resetWhenWL = true, alwaysOnTop = true, noBackground= false;
         public Point startPos = new Point(300, 300);
     }
 }
