@@ -7,8 +7,8 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10, fixedStartPos = 300;
-        int enemyEnergy = 3, wins = 0, counter = 0;
+        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        int enemyEnergy = 3, wins = 0;
         Point startPos = new Point(300, 300);
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
@@ -75,34 +75,15 @@ namespace AxieEnergyCount
         void LoadCache()
         {
             CacheController.GetCache();
-            if (CacheController.IsEmpty())
-            {
-                CacheController.cache.Add(counter.ToString());
-                CacheController.cache.Add(ResetWhenWLSubmenuBtn.Checked.ToString());
-                CacheController.cache.Add(AlwaysOnTopSubmenuBtn.Checked.ToString());
-                CacheController.cache.Add(Location.X.ToString());
-                CacheController.cache.Add(Location.Y.ToString());
-                CacheController.Save();
-                return;
-            }
-            while (CacheController.cache.Count < 5)
-                CacheController.cache.Add("");
-            counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
-            ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultResetWhenWL) ? resultResetWhenWL : true;
-            AlwaysOnTopSubmenuBtn.Checked = bool.TryParse(CacheController.cache[2], out bool resultAlwaysOnTop) ? resultAlwaysOnTop : true;
-            startPos.X = int.TryParse(CacheController.cache[3], out int resultX) ? (resultX < 0) ? fixedStartPos : (resultX > Screen.PrimaryScreen.Bounds.Width - 400) ? fixedStartPos : resultX : fixedStartPos;
-            startPos.Y = int.TryParse(CacheController.cache[4], out int resultY) ? (resultY < 0) ? fixedStartPos : (resultY > Screen.PrimaryScreen.Bounds.Width - 400) ? fixedStartPos : resultY : fixedStartPos;
-            CacheController.cache[0] = counter.ToString();
-            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
-            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
-            CacheController.cache[3] = startPos.X.ToString();
-            CacheController.cache[4] = startPos.Y.ToString();
+            ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
+            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
+            startPos = CacheController.config.startPos;
             CacheController.Save();
         }
 
         void BackgroundSetup()
         {
-            PicBoxBG1.Image = BackgroundImages[counter];
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -135,32 +116,30 @@ namespace AxieEnergyCount
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            CacheController.cache[3] = Location.X.ToString();
-            CacheController.cache[4] = Location.Y.ToString();
+            CacheController.config.startPos = Location;
             CacheController.Save();
             timeEndPeriod(timerAccuracy);
         }
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            counter++;
-            if (counter >= BackgroundImages.Count)
-                counter = 0;
-            PicBoxBG1.Image = BackgroundImages[counter];
-            CacheController.cache[0] = counter.ToString();
+            CacheController.config.counter++;
+            if (CacheController.config.counter >= BackgroundImages.Count)
+                CacheController.config.counter = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
             CacheController.Save();
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
-            CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
+            CacheController.config.resetWhenWL = ResetWhenWLSubmenuBtn.Checked;
             CacheController.Save();
         }
 
         private void AlwaysOnTopSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = AlwaysOnTopSubmenuBtn.Checked;
-            CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
+            CacheController.config.alwaysOnTop = AlwaysOnTopSubmenuBtn.Checked;
             CacheController.Save();
         }
 
