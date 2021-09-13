@@ -7,8 +7,9 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10, fixedStartPos = 300;
         int enemyEnergy = 3, wins = 0, counter = 0;
+        Point startPos = new Point(300, 300);
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
 
@@ -79,17 +80,23 @@ namespace AxieEnergyCount
                 CacheController.cache.Add(counter.ToString());
                 CacheController.cache.Add(ResetWhenWLSubmenuBtn.Checked.ToString());
                 CacheController.cache.Add(AlwaysOnTopSubmenuBtn.Checked.ToString());
+                CacheController.cache.Add(Location.X.ToString());
+                CacheController.cache.Add(Location.Y.ToString());
                 CacheController.Save();
                 return;
             }
-            while (CacheController.cache.Count < 3)
+            while (CacheController.cache.Count < 5)
                 CacheController.cache.Add("");
             counter = int.TryParse(CacheController.cache[0], out int resultCounter) ? (resultCounter < 0) ? 0 : (resultCounter >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : resultCounter : 0;
             ResetWhenWLSubmenuBtn.Checked = bool.TryParse(CacheController.cache[1], out bool resultResetWhenWL) ? resultResetWhenWL : true;
             AlwaysOnTopSubmenuBtn.Checked = bool.TryParse(CacheController.cache[2], out bool resultAlwaysOnTop) ? resultAlwaysOnTop : true;
+            startPos.X = int.TryParse(CacheController.cache[3], out int resultX) ? (resultX < 0) ? fixedStartPos : (resultX > Screen.PrimaryScreen.Bounds.Width - 400) ? fixedStartPos : resultX : fixedStartPos;
+            startPos.Y = int.TryParse(CacheController.cache[4], out int resultY) ? (resultY < 0) ? fixedStartPos : (resultY > Screen.PrimaryScreen.Bounds.Width - 400) ? fixedStartPos : resultY : fixedStartPos;
             CacheController.cache[0] = counter.ToString();
             CacheController.cache[1] = ResetWhenWLSubmenuBtn.Checked.ToString();
             CacheController.cache[2] = AlwaysOnTopSubmenuBtn.Checked.ToString();
+            CacheController.cache[3] = startPos.X.ToString();
+            CacheController.cache[4] = startPos.Y.ToString();
             CacheController.Save();
         }
 
@@ -121,8 +128,16 @@ namespace AxieEnergyCount
         }
 
         //Events
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            Location = startPos;
+        }
+
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+            CacheController.cache[3] = Location.X.ToString();
+            CacheController.cache[4] = Location.Y.ToString();
+            CacheController.Save();
             timeEndPeriod(timerAccuracy);
         }
 
