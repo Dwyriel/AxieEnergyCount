@@ -77,13 +77,13 @@ namespace AxieEnergyCount
             CacheController.GetCache();
             ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
             AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
-            startPos = CacheController.config.startPos;
             CacheController.Save();
         }
 
         void BackgroundSetup()
         {
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
+            CacheController.config.backgroundImage = (CacheController.config.backgroundImage < 0) ? 0 : (CacheController.config.backgroundImage >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : CacheController.config.backgroundImage;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.backgroundImage];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -111,7 +111,7 @@ namespace AxieEnergyCount
         //Events
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            Location = startPos;
+            Location = CacheController.config.startPos;
         }
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -123,10 +123,10 @@ namespace AxieEnergyCount
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            CacheController.config.counter++;
-            if (CacheController.config.counter >= BackgroundImages.Count)
-                CacheController.config.counter = 0;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.counter];
+            CacheController.config.backgroundImage++;
+            if (CacheController.config.backgroundImage >= BackgroundImages.Count)
+                CacheController.config.backgroundImage = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.backgroundImage];
             CacheController.Save();
         }
 

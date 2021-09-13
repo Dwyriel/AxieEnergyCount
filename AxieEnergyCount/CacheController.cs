@@ -62,7 +62,7 @@ namespace AxieEnergyCount
 
     public class Configs
     {
-        public int counter = 0;
+        public int backgroundImage = 0;
         public bool resetWhenWL = true, alwaysOnTop = true;
         public Point startPos = new Point(300, 300);
     }
