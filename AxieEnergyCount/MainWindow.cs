@@ -81,7 +81,7 @@ namespace AxieEnergyCount
 
         void BackgroundSetup()
         {
-            CacheController.config.backgroundImage = (CacheController.config.backgroundImage < 0) ? 0 : (CacheController.config.backgroundImage >= BackgroundImages.Count) ? BackgroundImages.Count - 1 : CacheController.config.backgroundImage;
+            CacheController.config.backgroundImage = (CacheController.config.backgroundImage < 0 || CacheController.config.backgroundImage >= BackgroundImages.Count) ? CacheController.defaultConfig.backgroundImage : CacheController.config.backgroundImage;
             PicBoxBG1.Image = BackgroundImages[CacheController.config.backgroundImage];
             int tabIndex = 50;
             foreach (Label label in customLabels)
@@ -110,10 +110,13 @@ namespace AxieEnergyCount
         //Events
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            if(CacheController.config.startPos.X < 0 || CacheController.config.startPos.X > Screen.PrimaryScreen.Bounds.Width - 345)
-                CacheController.config.startPos.X = 300;
-            if (CacheController.config.startPos.Y < 0 || CacheController.config.startPos.Y > Screen.PrimaryScreen.Bounds.Height - 400)
-                CacheController.config.startPos.Y = 300;
+            Screen lastOpenedScreen = Screen.FromPoint(CacheController.config.startPos);
+            int lowerX = lastOpenedScreen.Bounds.X;
+            int upperX = lastOpenedScreen.Bounds.X + lastOpenedScreen.Bounds.Width - 345;
+            int lowerY = lastOpenedScreen.Bounds.Y;
+            int upperY = lastOpenedScreen.Bounds.Y + lastOpenedScreen.Bounds.Height - 400;
+            if (CacheController.config.startPos.X < lowerX || CacheController.config.startPos.X > upperX || CacheController.config.startPos.Y < lowerY || CacheController.config.startPos.Y > upperY)
+                CacheController.config.startPos = CacheController.defaultConfig.startPos;
             Location = CacheController.config.startPos;
         }
 

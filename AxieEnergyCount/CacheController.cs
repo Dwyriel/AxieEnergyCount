@@ -9,7 +9,8 @@ namespace AxieEnergyCount
 {
     static class CacheController
     {
-        public static Configs config ;
+        public readonly static Configs defaultConfig = new Configs();
+        public static Configs config;
         private static string path;
 
         public static void GetCache()
@@ -20,7 +21,7 @@ namespace AxieEnergyCount
                 loaded = Load();
             if (loaded)
                 return;
-            config = new Configs();
+            config = defaultConfig;
         }
 
 
