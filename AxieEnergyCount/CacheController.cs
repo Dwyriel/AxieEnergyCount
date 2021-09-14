@@ -62,8 +62,20 @@ namespace AxieEnergyCount
 
     public class Configs
     {
-        public int backgroundImage = 0;
-        public bool resetWhenWL = true, alwaysOnTop = true, noBackground= false;
-        public Point startPos = new Point(300, 300);
+        public int BackgroundImage = 0;
+        public bool ResetWhenWL = true, AlwaysOnTop = true, NoBackground = false, EnableHotkeys = true;
+        public Point WindowPosition = new Point(300, 300);
+        public KeyBinds KeyBinds = new KeyBinds();
+    }
+
+    public class KeyBinds
+    {
+        public int PlusEnergy = (int)Keys.Add;
+        public int MinusEnergy = (int)Keys.Subtract;
+        public int NextTurn = (int)Keys.Multiply;
+        public int NewGame = (int)Keys.Divide;
+        public int PlusWin = (int)Keys.F8;
+        public int MinusWin = (int)Keys.F7;
+        public int ResetWin = (int)Keys.F6;
     }
 }
