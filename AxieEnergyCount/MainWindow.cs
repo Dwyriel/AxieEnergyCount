@@ -86,9 +86,9 @@ namespace AxieEnergyCount
             buttonsPosition.Add(new Point(279, 82));
             buttonsPosition.Add(new Point(219, 122));
             buttonsPosition.Add(new Point(159, 122));
-            buttonsPosition.Add(new Point(8, 125));
-            buttonsPosition.Add(new Point(36, 125));
             buttonsPosition.Add(new Point(64, 125));
+            buttonsPosition.Add(new Point(36, 125));
+            buttonsPosition.Add(new Point(8, 125));
             //Buttons
             buttons.Add(BtnMinusOneEnergy);
             buttons.Add(BtnPlusOneEnergy);
