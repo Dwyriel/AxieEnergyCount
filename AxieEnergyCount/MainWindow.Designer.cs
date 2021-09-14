@@ -51,6 +51,7 @@ namespace AxieEnergyCount
             this.BtnPlusWin = new System.Windows.Forms.Button();
             this.BtnResetWin = new System.Windows.Forms.Button();
             this.BtnMinusWin = new System.Windows.Forms.Button();
+            this.HideButtonsSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage3)).BeginInit();
@@ -79,6 +80,7 @@ namespace AxieEnergyCount
             this.ResetWhenWLSubmenuBtn,
             this.AlwaysOnTopSubmenuBtn,
             this.NoImageSubmenuBtn,
+            this.HideButtonsSubmenuBtn,
             this.HotkeysSubmenuBtn,
             this.ExitSubmenuBtn});
             this.OptionsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLight;
@@ -137,14 +139,14 @@ namespace AxieEnergyCount
             this.HotkeysEnabledSubmenuBtn.CheckOnClick = true;
             this.HotkeysEnabledSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.HotkeysEnabledSubmenuBtn.Name = "HotkeysEnabledSubmenuBtn";
-            this.HotkeysEnabledSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.HotkeysEnabledSubmenuBtn.Size = new System.Drawing.Size(127, 22);
             this.HotkeysEnabledSubmenuBtn.Text = "Enable";
             this.HotkeysEnabledSubmenuBtn.CheckedChanged += new System.EventHandler(this.HotkeysEnableSubmenuBtn_CheckedChanged);
             // 
             // HotkeysConfigureSubmenuBtn
             // 
             this.HotkeysConfigureSubmenuBtn.Name = "HotkeysConfigureSubmenuBtn";
-            this.HotkeysConfigureSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.HotkeysConfigureSubmenuBtn.Size = new System.Drawing.Size(127, 22);
             this.HotkeysConfigureSubmenuBtn.Text = "Configure";
             this.HotkeysConfigureSubmenuBtn.Click += new System.EventHandler(this.HotkeysConfigureSubmenuBtn_Click);
             // 
@@ -281,6 +283,14 @@ namespace AxieEnergyCount
             this.BtnMinusWin.UseVisualStyleBackColor = true;
             this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
             // 
+            // HideButtonsSubmenuBtn
+            // 
+            this.HideButtonsSubmenuBtn.CheckOnClick = true;
+            this.HideButtonsSubmenuBtn.Name = "HideButtonsSubmenuBtn";
+            this.HideButtonsSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.HideButtonsSubmenuBtn.Text = "Hide Buttons";
+            this.HideButtonsSubmenuBtn.CheckedChanged += new System.EventHandler(this.HideButtonsSubmenuBtn_CheckedChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -340,6 +350,7 @@ namespace AxieEnergyCount
         private System.Windows.Forms.ToolStripMenuItem HotkeysSubmenuBtn;
         private System.Windows.Forms.ToolStripMenuItem HotkeysEnabledSubmenuBtn;
         private System.Windows.Forms.ToolStripMenuItem HotkeysConfigureSubmenuBtn;
+        private System.Windows.Forms.ToolStripMenuItem HideButtonsSubmenuBtn;
     }
 }
 

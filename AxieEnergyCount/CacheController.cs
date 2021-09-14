@@ -63,7 +63,7 @@ namespace AxieEnergyCount
     public class Configs
     {
         public int BackgroundImage = 0;
-        public bool ResetWhenWL = true, AlwaysOnTop = true, NoBackground = false, EnableHotkeys = true;
+        public bool ResetWhenWL = true, AlwaysOnTop = true, NoBackground = false, EnableHotkeys = true, HideButtons = false;
         public Point WindowPosition = new Point(300, 300);
         public KeyBinds KeyBinds = new KeyBinds();
     }

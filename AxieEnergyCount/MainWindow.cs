@@ -8,11 +8,12 @@ namespace AxieEnergyCount
     public partial class MainWindow : Form
     {
         readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
-        readonly Size defaultSize = new Size(356, 400), noBackgroundSize = new Size(356, 202);
+        readonly Size defaultSize = new Size(356, 400), noBackgroundSize = new Size(356, 202), noBackgroundAndNoButtonsSize = new Size(356, 150);
         int enemyEnergy = 3, wins = 0;
         List<Image> BackgroundImages = new List<Image>();
         List<Label> customLabels = new List<Label>();
         List<Point> buttonsPosition = new List<Point>();
+        List<Button> buttons = new List<Button>();
 
         //Set clock timer to render gif at 100% speed:
         private const int timerAccuracy = 10;
@@ -88,6 +89,14 @@ namespace AxieEnergyCount
             buttonsPosition.Add(new Point(8, 125));
             buttonsPosition.Add(new Point(36, 125));
             buttonsPosition.Add(new Point(64, 125));
+            //Buttons
+            buttons.Add(BtnMinusOneEnergy);
+            buttons.Add(BtnPlusOneEnergy);
+            buttons.Add(BtnNextTurn);
+            buttons.Add(BtnNewGame);
+            buttons.Add(BtnPlusWin);
+            buttons.Add(BtnMinusWin);
+            buttons.Add(BtnResetWin);
         }
 
         void LoadCache()
@@ -142,24 +151,35 @@ namespace AxieEnergyCount
             AlwaysOnTopSubmenuBtn.Checked = CacheController.config.AlwaysOnTop;
             NoImageSubmenuBtn.Checked = CacheController.config.NoBackground;
             HotkeysEnabledSubmenuBtn.Checked = CacheController.config.EnableHotkeys;
+            HideButtonsSubmenuBtn.Checked = CacheController.config.HideButtons;
         }
 
         private void SetButtonPos(bool toDefaultPos)
         {
-            int startIndex = (toDefaultPos) ? 0 : 7;
-            BtnMinusOneEnergy.Location = buttonsPosition[startIndex];
-            BtnPlusOneEnergy.Location = buttonsPosition[++startIndex];
-            BtnNextTurn.Location = buttonsPosition[++startIndex];
-            BtnNewGame.Location = buttonsPosition[++startIndex];
-            BtnPlusWin.Location = buttonsPosition[++startIndex];
-            BtnMinusWin.Location = buttonsPosition[++startIndex];
-            BtnResetWin.Location = buttonsPosition[++startIndex];
+            int startIndex = toDefaultPos ? -1 : buttons.Count - 1;
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].Location = buttonsPosition[++startIndex];
+            }
         }
 
-        private void ChangeSizeAndBG(bool toDefaultValue)
+        private void ChangeSizeAndBG()
         {
-            PicBoxBG1.Image = toDefaultValue ? BackgroundImages[CacheController.config.BackgroundImage] : Properties.Resources.NoBG;
-            Size = toDefaultValue ? defaultSize : noBackgroundSize;
+            if (HideButtonsSubmenuBtn.Checked && NoImageSubmenuBtn.Checked)
+            {
+                PicBoxBG1.Image = Properties.Resources.NoBG;
+                Size = noBackgroundAndNoButtonsSize;
+            }
+            else if (NoImageSubmenuBtn.Checked && !HideButtonsSubmenuBtn.Checked)
+            {
+                PicBoxBG1.Image = Properties.Resources.NoBG;
+                Size = noBackgroundSize;
+            }
+            else
+            {
+                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+                Size = defaultSize;
+            }
             Refresh();
         }
 
@@ -205,8 +225,17 @@ namespace AxieEnergyCount
         {
             BackgroundSubmenuBtn.Enabled = !NoImageSubmenuBtn.Checked;
             SetButtonPos(!NoImageSubmenuBtn.Checked);
-            ChangeSizeAndBG(!NoImageSubmenuBtn.Checked);
+            ChangeSizeAndBG();
             CacheController.config.NoBackground = NoImageSubmenuBtn.Checked;
+            CacheController.Save();
+        }
+
+        private void HideButtonsSubmenuBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (Button btn in buttons)
+                btn.Visible = !HideButtonsSubmenuBtn.Checked;
+            ChangeSizeAndBG();
+            CacheController.config.HideButtons = HideButtonsSubmenuBtn.Checked;
             CacheController.Save();
         }
 
@@ -325,20 +354,20 @@ namespace AxieEnergyCount
             if (m.Msg == 0x0312)
             {
                 int keyValue = m.WParam.ToInt32();
-                if (keyValue == CacheController.config.KeyBinds.PlusEnergy)
-                    BtnPlusOneEnergy.PerformClick();
                 if (keyValue == CacheController.config.KeyBinds.MinusEnergy)
-                    BtnMinusOneEnergy.PerformClick();
-                if (keyValue == CacheController.config.KeyBinds.ResetWin)
-                    BtnResetWin.PerformClick();
-                if (keyValue == CacheController.config.KeyBinds.MinusWin)
-                    BtnMinusWin.PerformClick();
-                if (keyValue == CacheController.config.KeyBinds.PlusWin)
-                    BtnPlusWin.PerformClick();
-                if (keyValue == CacheController.config.KeyBinds.NewGame)
-                    BtnNewGame.PerformClick();
+                    BtnMinusOneEnergy_Click(this, null);
+                if (keyValue == CacheController.config.KeyBinds.PlusEnergy)
+                    BtnPlusOneEnergy_Click(this, null);
                 if (keyValue == CacheController.config.KeyBinds.NextTurn)
-                    BtnNextTurn.PerformClick();
+                    BtnNextTurn_Click(this, null);
+                if (keyValue == CacheController.config.KeyBinds.NewGame)
+                    BtnNewGame_Click(this, null);
+                if (keyValue == CacheController.config.KeyBinds.PlusWin)
+                    BtnPlusWin_Click(this, null);
+                if (keyValue == CacheController.config.KeyBinds.MinusWin)
+                    BtnMinusWin_Click(this, null);
+                if (keyValue == CacheController.config.KeyBinds.ResetWin)
+                    BtnResetWin_Click(this, null);
             }
             base.WndProc(ref m);
         }
