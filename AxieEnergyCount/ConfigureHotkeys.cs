@@ -134,5 +134,10 @@ namespace AxieEnergyCount
             CacheController.config.KeyBinds = CacheController.defaultConfig.KeyBinds;
             SetButtonsName();
         }
+
+        private void OkBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

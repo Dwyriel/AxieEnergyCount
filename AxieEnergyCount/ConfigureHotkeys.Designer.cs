@@ -45,6 +45,7 @@ namespace AxieEnergyCount
             this.SubWBtn = new System.Windows.Forms.Button();
             this.ResetWBtn = new System.Windows.Forms.Button();
             this.DefaultBtn = new System.Windows.Forms.Button();
+            this.OkBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -197,7 +198,7 @@ namespace AxieEnergyCount
             // DefaultBtn
             // 
             this.DefaultBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DefaultBtn.Location = new System.Drawing.Point(108, 324);
+            this.DefaultBtn.Location = new System.Drawing.Point(163, 324);
             this.DefaultBtn.Name = "DefaultBtn";
             this.DefaultBtn.Size = new System.Drawing.Size(102, 43);
             this.DefaultBtn.TabIndex = 14;
@@ -205,11 +206,23 @@ namespace AxieEnergyCount
             this.DefaultBtn.UseVisualStyleBackColor = true;
             this.DefaultBtn.Click += new System.EventHandler(this.DefaultBtn_Click);
             // 
+            // OkBtn
+            // 
+            this.OkBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OkBtn.Location = new System.Drawing.Point(59, 324);
+            this.OkBtn.Name = "OkBtn";
+            this.OkBtn.Size = new System.Drawing.Size(102, 43);
+            this.OkBtn.TabIndex = 15;
+            this.OkBtn.Text = "Done";
+            this.OkBtn.UseVisualStyleBackColor = true;
+            this.OkBtn.Click += new System.EventHandler(this.OkBtn_Click);
+            // 
             // ConfigureHotkeys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 370);
+            this.Controls.Add(this.OkBtn);
             this.Controls.Add(this.DefaultBtn);
             this.Controls.Add(this.ResetWBtn);
             this.Controls.Add(this.SubWBtn);
@@ -252,5 +265,6 @@ namespace AxieEnergyCount
         private System.Windows.Forms.Button SubWBtn;
         private System.Windows.Forms.Button ResetWBtn;
         private System.Windows.Forms.Button DefaultBtn;
+        private System.Windows.Forms.Button OkBtn;
     }
 }
