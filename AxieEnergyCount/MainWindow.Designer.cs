@@ -35,14 +35,11 @@ namespace AxieEnergyCount
             this.ResetWhenWLSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.AlwaysOnTopSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.NoImageSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.HideButtonsSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.HotkeysSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.HotkeysEnabledSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.HotkeysConfigureSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.BackgroundImage4 = new System.Windows.Forms.PictureBox();
-            this.BackgroundImage3 = new System.Windows.Forms.PictureBox();
-            this.BackgroundImage2 = new System.Windows.Forms.PictureBox();
-            this.BackgroundImage1 = new System.Windows.Forms.PictureBox();
             this.PicBoxBG1 = new System.Windows.Forms.PictureBox();
             this.BtnNextTurn = new System.Windows.Forms.Button();
             this.BtnMinusOneEnergy = new System.Windows.Forms.Button();
@@ -51,12 +48,7 @@ namespace AxieEnergyCount
             this.BtnPlusWin = new System.Windows.Forms.Button();
             this.BtnResetWin = new System.Windows.Forms.Button();
             this.BtnMinusWin = new System.Windows.Forms.Button();
-            this.HideButtonsSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicBoxBG1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,7 +84,7 @@ namespace AxieEnergyCount
             // 
             this.BackgroundSubmenuBtn.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundSubmenuBtn.Name = "BackgroundSubmenuBtn";
-            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.BackgroundSubmenuBtn.Text = "Background";
             this.BackgroundSubmenuBtn.Click += new System.EventHandler(this.BackgroundSubmenuBtn_Click);
             // 
@@ -102,7 +94,7 @@ namespace AxieEnergyCount
             this.ResetWhenWLSubmenuBtn.CheckOnClick = true;
             this.ResetWhenWLSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ResetWhenWLSubmenuBtn.Name = "ResetWhenWLSubmenuBtn";
-            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.ResetWhenWLSubmenuBtn.Text = "Reset When W/L";
             this.ResetWhenWLSubmenuBtn.CheckedChanged += new System.EventHandler(this.ResetWhenWLSubmenuBtn_CheckedChanged);
             // 
@@ -112,7 +104,7 @@ namespace AxieEnergyCount
             this.AlwaysOnTopSubmenuBtn.CheckOnClick = true;
             this.AlwaysOnTopSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AlwaysOnTopSubmenuBtn.Name = "AlwaysOnTopSubmenuBtn";
-            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.AlwaysOnTopSubmenuBtn.Text = "Always on Top";
             this.AlwaysOnTopSubmenuBtn.CheckedChanged += new System.EventHandler(this.AlwaysOnTopSubmenuBtn_CheckedChanged);
             // 
@@ -120,9 +112,17 @@ namespace AxieEnergyCount
             // 
             this.NoImageSubmenuBtn.CheckOnClick = true;
             this.NoImageSubmenuBtn.Name = "NoImageSubmenuBtn";
-            this.NoImageSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.NoImageSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.NoImageSubmenuBtn.Text = "No Background";
             this.NoImageSubmenuBtn.CheckedChanged += new System.EventHandler(this.NoImageSubmenuBtn_CheckedChanged);
+            // 
+            // HideButtonsSubmenuBtn
+            // 
+            this.HideButtonsSubmenuBtn.CheckOnClick = true;
+            this.HideButtonsSubmenuBtn.Name = "HideButtonsSubmenuBtn";
+            this.HideButtonsSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.HideButtonsSubmenuBtn.Text = "Hide Buttons";
+            this.HideButtonsSubmenuBtn.CheckedChanged += new System.EventHandler(this.HideButtonsSubmenuBtn_CheckedChanged);
             // 
             // HotkeysSubmenuBtn
             // 
@@ -130,7 +130,7 @@ namespace AxieEnergyCount
             this.HotkeysEnabledSubmenuBtn,
             this.HotkeysConfigureSubmenuBtn});
             this.HotkeysSubmenuBtn.Name = "HotkeysSubmenuBtn";
-            this.HotkeysSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.HotkeysSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.HotkeysSubmenuBtn.Text = "Hotkeys";
             // 
             // HotkeysEnabledSubmenuBtn
@@ -153,49 +153,9 @@ namespace AxieEnergyCount
             // ExitSubmenuBtn
             // 
             this.ExitSubmenuBtn.Name = "ExitSubmenuBtn";
-            this.ExitSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.ExitSubmenuBtn.Size = new System.Drawing.Size(161, 22);
             this.ExitSubmenuBtn.Text = "Exit";
             this.ExitSubmenuBtn.Click += new System.EventHandler(this.ExitSubmenuBtn_Click);
-            // 
-            // BackgroundImage4
-            // 
-            this.BackgroundImage4.Image = global::AxieEnergyCount.Properties.Resources.tumblr_pcltzsiH4h1wceprro6_400;
-            this.BackgroundImage4.Location = new System.Drawing.Point(145, 163);
-            this.BackgroundImage4.Name = "BackgroundImage4";
-            this.BackgroundImage4.Size = new System.Drawing.Size(109, 69);
-            this.BackgroundImage4.TabIndex = 5;
-            this.BackgroundImage4.TabStop = false;
-            this.BackgroundImage4.Visible = false;
-            // 
-            // BackgroundImage3
-            // 
-            this.BackgroundImage3.Image = global::AxieEnergyCount.Properties.Resources.cat_angela;
-            this.BackgroundImage3.Location = new System.Drawing.Point(130, 148);
-            this.BackgroundImage3.Name = "BackgroundImage3";
-            this.BackgroundImage3.Size = new System.Drawing.Size(109, 69);
-            this.BackgroundImage3.TabIndex = 4;
-            this.BackgroundImage3.TabStop = false;
-            this.BackgroundImage3.Visible = false;
-            // 
-            // BackgroundImage2
-            // 
-            this.BackgroundImage2.Image = global::AxieEnergyCount.Properties.Resources.seraph_of_the_end_stare;
-            this.BackgroundImage2.Location = new System.Drawing.Point(114, 131);
-            this.BackgroundImage2.Name = "BackgroundImage2";
-            this.BackgroundImage2.Size = new System.Drawing.Size(109, 69);
-            this.BackgroundImage2.TabIndex = 3;
-            this.BackgroundImage2.TabStop = false;
-            this.BackgroundImage2.Visible = false;
-            // 
-            // BackgroundImage1
-            // 
-            this.BackgroundImage1.Image = global::AxieEnergyCount.Properties.Resources.nekoha_anime;
-            this.BackgroundImage1.Location = new System.Drawing.Point(100, 118);
-            this.BackgroundImage1.Name = "BackgroundImage1";
-            this.BackgroundImage1.Size = new System.Drawing.Size(109, 69);
-            this.BackgroundImage1.TabIndex = 2;
-            this.BackgroundImage1.TabStop = false;
-            this.BackgroundImage1.Visible = false;
             // 
             // PicBoxBG1
             // 
@@ -283,14 +243,6 @@ namespace AxieEnergyCount
             this.BtnMinusWin.UseVisualStyleBackColor = true;
             this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
             // 
-            // HideButtonsSubmenuBtn
-            // 
-            this.HideButtonsSubmenuBtn.CheckOnClick = true;
-            this.HideButtonsSubmenuBtn.Name = "HideButtonsSubmenuBtn";
-            this.HideButtonsSubmenuBtn.Size = new System.Drawing.Size(180, 22);
-            this.HideButtonsSubmenuBtn.Text = "Hide Buttons";
-            this.HideButtonsSubmenuBtn.CheckedChanged += new System.EventHandler(this.HideButtonsSubmenuBtn_CheckedChanged);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,10 +255,6 @@ namespace AxieEnergyCount
             this.Controls.Add(this.BtnPlusOneEnergy);
             this.Controls.Add(this.BtnMinusOneEnergy);
             this.Controls.Add(this.BtnNextTurn);
-            this.Controls.Add(this.BackgroundImage4);
-            this.Controls.Add(this.BackgroundImage3);
-            this.Controls.Add(this.BackgroundImage2);
-            this.Controls.Add(this.BackgroundImage1);
             this.Controls.Add(this.PicBoxBG1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -316,10 +264,6 @@ namespace AxieEnergyCount
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackgroundImage1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicBoxBG1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -333,10 +277,6 @@ namespace AxieEnergyCount
         private System.Windows.Forms.ToolStripMenuItem OptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BackgroundSubmenuBtn;
         private System.Windows.Forms.ToolStripMenuItem ExitSubmenuBtn;
-        private System.Windows.Forms.PictureBox BackgroundImage1;
-        private System.Windows.Forms.PictureBox BackgroundImage2;
-        private System.Windows.Forms.PictureBox BackgroundImage3;
-        private System.Windows.Forms.PictureBox BackgroundImage4;
         private System.Windows.Forms.Button BtnNextTurn;
         private System.Windows.Forms.ToolStripMenuItem ResetWhenWLSubmenuBtn;
         private System.Windows.Forms.Button BtnMinusOneEnergy;

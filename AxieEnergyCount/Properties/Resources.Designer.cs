@@ -63,9 +63,9 @@ namespace AxieEnergyCount.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cat_angela {
+        internal static System.Drawing.Bitmap Image0 {
             get {
-                object obj = ResourceManager.GetObject("cat-angela", resourceCulture);
+                object obj = ResourceManager.GetObject("Image0", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,29 @@ namespace AxieEnergyCount.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap nekoha_anime {
+        internal static System.Drawing.Bitmap Image1 {
             get {
-                object obj = ResourceManager.GetObject("nekoha-anime", resourceCulture);
+                object obj = ResourceManager.GetObject("Image1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Image2 {
+            get {
+                object obj = ResourceManager.GetObject("Image2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Image3 {
+            get {
+                object obj = ResourceManager.GetObject("Image3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,26 +106,6 @@ namespace AxieEnergyCount.Properties {
         internal static System.Drawing.Bitmap NoBG {
             get {
                 object obj = ResourceManager.GetObject("NoBG", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap seraph_of_the_end_stare {
-            get {
-                object obj = ResourceManager.GetObject("seraph-of-the-end-stare", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap tumblr_pcltzsiH4h1wceprro6_400 {
-            get {
-                object obj = ResourceManager.GetObject("tumblr_pcltzsiH4h1wceprro6_400", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

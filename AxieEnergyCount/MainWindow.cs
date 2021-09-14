@@ -69,10 +69,10 @@ namespace AxieEnergyCount
         void SetupLists()
         {
             //BackgroundImages
-            BackgroundImages.Add(BackgroundImage1.Image);
-            BackgroundImages.Add(BackgroundImage2.Image);
-            BackgroundImages.Add(BackgroundImage3.Image);
-            BackgroundImages.Add(BackgroundImage4.Image);
+            BackgroundImages.Add(Properties.Resources.Image0);
+            BackgroundImages.Add(Properties.Resources.Image1);
+            BackgroundImages.Add(Properties.Resources.Image2);
+            BackgroundImages.Add(Properties.Resources.Image3);
             //ButtonDefaultPos
             buttonsPosition.Add(new Point(219, 280));
             buttonsPosition.Add(new Point(279, 280));
