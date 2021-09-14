@@ -227,6 +227,7 @@ namespace AxieEnergyCount
             this.Controls.Add(this.label1);
             this.Name = "ConfigureHotkeys";
             this.Text = "Hotkeys";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConfigureHotkeys_FormClosed);
             this.Load += new System.EventHandler(this.ConfigureHotkeys_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AxieEnergyCount
@@ -20,6 +13,11 @@ namespace AxieEnergyCount
         private void ConfigureHotkeys_Load(object sender, EventArgs e)
         {
             SetButtonsName();
+        }
+
+        private void ConfigureHotkeys_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CacheController.Save();
         }
 
         private void SetButtonsName()
