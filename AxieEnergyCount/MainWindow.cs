@@ -98,8 +98,8 @@ namespace AxieEnergyCount
 
         void BackgroundSetup()
         {
-            CacheController.config.backgroundImage = (CacheController.config.backgroundImage < 0 || CacheController.config.backgroundImage >= BackgroundImages.Count) ? CacheController.defaultConfig.backgroundImage : CacheController.config.backgroundImage;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.backgroundImage];
+            CacheController.config.BackgroundImage = (CacheController.config.BackgroundImage < 0 || CacheController.config.BackgroundImage >= BackgroundImages.Count) ? CacheController.defaultConfig.BackgroundImage : CacheController.config.BackgroundImage;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -126,21 +126,22 @@ namespace AxieEnergyCount
 
         private void SetStartPos()
         {
-            Screen lastOpenedScreen = Screen.FromPoint(CacheController.config.startPos);
+            Screen lastOpenedScreen = Screen.FromPoint(CacheController.config.WindowPosition);
             int lowerX = lastOpenedScreen.Bounds.X;
             int upperX = lastOpenedScreen.Bounds.X + lastOpenedScreen.Bounds.Width - 345;
             int lowerY = lastOpenedScreen.Bounds.Y;
             int upperY = lastOpenedScreen.Bounds.Y + lastOpenedScreen.Bounds.Height - 400;
-            if (CacheController.config.startPos.X < lowerX || CacheController.config.startPos.X > upperX || CacheController.config.startPos.Y < lowerY || CacheController.config.startPos.Y > upperY)
-                CacheController.config.startPos = CacheController.defaultConfig.startPos;
-            Location = CacheController.config.startPos;
+            if (CacheController.config.WindowPosition.X < lowerX || CacheController.config.WindowPosition.X > upperX || CacheController.config.WindowPosition.Y < lowerY || CacheController.config.WindowPosition.Y > upperY)
+                CacheController.config.WindowPosition = CacheController.defaultConfig.WindowPosition;
+            Location = CacheController.config.WindowPosition;
         }
 
         private void LoadVariables()
         {
-            ResetWhenWLSubmenuBtn.Checked = CacheController.config.resetWhenWL;
-            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.alwaysOnTop;
-            NoImageSubmenuBtn.Checked = CacheController.config.noBackground;
+            ResetWhenWLSubmenuBtn.Checked = CacheController.config.ResetWhenWL;
+            AlwaysOnTopSubmenuBtn.Checked = CacheController.config.AlwaysOnTop;
+            NoImageSubmenuBtn.Checked = CacheController.config.NoBackground;
+            HotkeysEnabledSubmenuBtn.Checked = CacheController.config.EnableHotkeys;
         }
 
         private void SetButtonPos(bool toDefaultPos)
@@ -157,7 +158,7 @@ namespace AxieEnergyCount
 
         private void ChangeSizeAndBG(bool toDefaultValue)
         {
-            PicBoxBG1.Image = toDefaultValue ? BackgroundImages[CacheController.config.backgroundImage] : Properties.Resources.NoBG;
+            PicBoxBG1.Image = toDefaultValue ? BackgroundImages[CacheController.config.BackgroundImage] : Properties.Resources.NoBG;
             Size = toDefaultValue ? defaultSize : noBackgroundSize;
             Refresh();
         }
@@ -165,36 +166,38 @@ namespace AxieEnergyCount
         //Events
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            RegisterHotKeys();
             SetStartPos();
             LoadVariables();
         }
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            CacheController.config.startPos = Location;
+            CacheController.config.WindowPosition = Location;
             CacheController.Save();
             timeEndPeriod(timerAccuracy);
+            UnregisterHotKeys();
         }
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            CacheController.config.backgroundImage++;
-            if (CacheController.config.backgroundImage >= BackgroundImages.Count)
-                CacheController.config.backgroundImage = 0;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.backgroundImage];
+            CacheController.config.BackgroundImage++;
+            if (CacheController.config.BackgroundImage >= BackgroundImages.Count)
+                CacheController.config.BackgroundImage = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
             CacheController.Save();
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
-            CacheController.config.resetWhenWL = ResetWhenWLSubmenuBtn.Checked;
+            CacheController.config.ResetWhenWL = ResetWhenWLSubmenuBtn.Checked;
             CacheController.Save();
         }
 
         private void AlwaysOnTopSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = AlwaysOnTopSubmenuBtn.Checked;
-            CacheController.config.alwaysOnTop = AlwaysOnTopSubmenuBtn.Checked;
+            CacheController.config.AlwaysOnTop = AlwaysOnTopSubmenuBtn.Checked;
             CacheController.Save();
         }
 
@@ -203,8 +206,41 @@ namespace AxieEnergyCount
             BackgroundSubmenuBtn.Enabled = !NoImageSubmenuBtn.Checked;
             SetButtonPos(!NoImageSubmenuBtn.Checked);
             ChangeSizeAndBG(!NoImageSubmenuBtn.Checked);
-            CacheController.config.noBackground = NoImageSubmenuBtn.Checked;
+            CacheController.config.NoBackground = NoImageSubmenuBtn.Checked;
             CacheController.Save();
+        }
+
+        private void HotkeysEnableSubmenuBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (HotkeysEnabledSubmenuBtn.Checked)
+                RegisterHotKeys();
+            else UnregisterHotKeys();
+            CacheController.config.EnableHotkeys = HotkeysEnabledSubmenuBtn.Checked;
+            CacheController.Save();
+        }
+
+        private void HotkeysConfigureSubmenuBtn_Click(object sender, EventArgs e)
+        {
+            if (HotkeysEnabledSubmenuBtn.Checked)
+                UnregisterHotKeys();
+            ConfigureHotkeys configureHotkeys = new ConfigureHotkeys()
+            {
+                Icon = Properties.Resources.vanilla_icon,
+                Owner = this,
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedSingle,
+                TopMost = this.TopMost,
+                MaximizeBox = false
+            };
+            configureHotkeys.ShowDialog();
+            if (HotkeysEnabledSubmenuBtn.Checked)
+                RegisterHotKeys();
+            configureHotkeys.Dispose();
+        }
+
+        private void ExitSubmenuBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void BtnMinusOneEnergy_Click(object sender, EventArgs e)
@@ -255,9 +291,56 @@ namespace AxieEnergyCount
             ShowNewNumber();
         }
 
-        private void ExitSubmenuBtn_Click(object sender, EventArgs e)
+        //HotKeys
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private void RegisterHotKeys()
         {
-            this.Close();
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.PlusEnergy, 0, CacheController.config.KeyBinds.PlusEnergy);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.MinusEnergy, 0, CacheController.config.KeyBinds.MinusEnergy);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.ResetWin, 0, CacheController.config.KeyBinds.ResetWin);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.MinusWin, 0, CacheController.config.KeyBinds.MinusWin);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.PlusWin, 0, CacheController.config.KeyBinds.PlusWin);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.NewGame, 0, CacheController.config.KeyBinds.NewGame);
+            RegisterHotKey(this.Handle, CacheController.config.KeyBinds.NextTurn, 0, CacheController.config.KeyBinds.NextTurn);
+        }
+
+        private void UnregisterHotKeys()
+        {
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.PlusEnergy);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.MinusEnergy);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.ResetWin);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.MinusWin);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.PlusWin);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.NewGame);
+            UnregisterHotKey(this.Handle, CacheController.config.KeyBinds.NextTurn);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x0312)
+            {
+                int keyValue = m.WParam.ToInt32();
+                if (keyValue == CacheController.config.KeyBinds.PlusEnergy)
+                    BtnPlusOneEnergy.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.MinusEnergy)
+                    BtnMinusOneEnergy.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.ResetWin)
+                    BtnResetWin.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.MinusWin)
+                    BtnMinusWin.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.PlusWin)
+                    BtnPlusWin.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.NewGame)
+                    BtnNewGame.PerformClick();
+                if (keyValue == CacheController.config.KeyBinds.NextTurn)
+                    BtnNextTurn.PerformClick();
+            }
+            base.WndProc(ref m);
         }
     }
 }

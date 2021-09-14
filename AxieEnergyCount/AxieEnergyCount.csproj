@@ -49,10 +49,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigureHotkeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigureHotkeys.Designer.cs">
+      <DependentUpon>ConfigureHotkeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CacheController.cs" />
+    <Compile Include="GetKeyStroke.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetKeyStroke.Designer.cs">
+      <DependentUpon>GetKeyStroke.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +73,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConfigureHotkeys.resx">
+      <DependentUpon>ConfigureHotkeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetKeyStroke.resx">
+      <DependentUpon>GetKeyStroke.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
