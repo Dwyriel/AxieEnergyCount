@@ -7,7 +7,7 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        const int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
         readonly Size defaultSize = new Size(356, 400), noBackgroundSize = new Size(356, 202), noBackgroundAndNoButtonsSize = new Size(356, 150);
         int enemyEnergy = 3, wins = 0;
         List<Image> BackgroundImages = new List<Image>();
@@ -27,8 +27,8 @@ namespace AxieEnergyCount
             SetupCustomLabels();
             SetStartAttributes();
             InitializeComponent();
-            SetupLists();
             LoadCache();
+            SetupLists();
             BackgroundSetup();
         }
 
@@ -66,13 +66,17 @@ namespace AxieEnergyCount
             Icon = Properties.Resources.vanilla_icon;
         }
 
+        void LoadCache()
+        {
+            UserImage.LoadImages();
+            CacheController.GetCache();
+            CacheController.Save();
+        }
+
         void SetupLists()
         {
             //BackgroundImages
-            BackgroundImages.Add(Properties.Resources.Image0);
-            BackgroundImages.Add(Properties.Resources.Image1);
-            BackgroundImages.Add(Properties.Resources.Image2);
-            BackgroundImages.Add(Properties.Resources.Image3);
+            BackgroundImagesListSetup();
             //ButtonDefaultPos
             buttonsPosition.Add(new Point(219, 280));
             buttonsPosition.Add(new Point(279, 280));
@@ -99,16 +103,19 @@ namespace AxieEnergyCount
             buttons.Add(BtnResetWin);
         }
 
-        void LoadCache()
+        void BackgroundImagesListSetup()
         {
-            CacheController.GetCache();
-            CacheController.Save();
+            BackgroundImages = new List<Image>();
+            BackgroundImages.Add(Properties.Resources.Image0);
+            BackgroundImages.Add(Properties.Resources.Image1);
+            foreach (Image image in UserImage.UserImages)
+                BackgroundImages.Add(image);
         }
 
         void BackgroundSetup()
         {
-            CacheController.config.BackgroundImage = (CacheController.config.BackgroundImage < 0 || CacheController.config.BackgroundImage >= BackgroundImages.Count) ? CacheController.defaultConfig.BackgroundImage : CacheController.config.BackgroundImage;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+            CacheController.config.BackgroundImageIndex = (CacheController.config.BackgroundImageIndex < 0 || CacheController.config.BackgroundImageIndex >= BackgroundImages.Count) ? CacheController.defaultConfig.BackgroundImageIndex : CacheController.config.BackgroundImageIndex;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -177,7 +184,7 @@ namespace AxieEnergyCount
             }
             else
             {
-                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
                 Size = defaultSize;
             }
             Refresh();
@@ -201,11 +208,23 @@ namespace AxieEnergyCount
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            CacheController.config.BackgroundImage++;
-            if (CacheController.config.BackgroundImage >= BackgroundImages.Count)
-                CacheController.config.BackgroundImage = 0;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+            CacheController.config.BackgroundImageIndex++;
+            if (CacheController.config.BackgroundImageIndex >= BackgroundImages.Count)
+                CacheController.config.BackgroundImageIndex = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
             CacheController.Save();
+        }
+
+        private void AddBackgroundSubmenuBtn_Click(object sender, EventArgs e)
+        {
+            if (UserImage.AddNewImage())
+            {
+                UserImage.LoadImages();
+                BackgroundImagesListSetup();
+                CacheController.config.BackgroundImageIndex = 0;
+                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
+                MessageBox.Show("Background image has been reset");
+            }
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)

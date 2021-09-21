@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace AxieEnergyCount
 {
@@ -23,13 +24,22 @@ namespace AxieEnergyCount
             config = defaultConfig;
         }
 
-
         public static void Save()
         {
             FileStream outFile = File.Create(path);
-            XmlSerializer format = new XmlSerializer(typeof(Configs));
-            format.Serialize(outFile, config);
-            outFile.Close();
+            try
+            {
+                XmlSerializer format = new XmlSerializer(typeof(Configs));
+                format.Serialize(outFile, config);
+            }
+            catch (Exception e)
+            {
+                LogAndErrors.ShowErrorTextWithExceptionMessage("An error occurred while saving cache to AxieEnergyCount.ini, check log.txt file.", e, true);
+            }
+            finally
+            {
+                outFile.Close();
+            }
         }
 
         public static bool Load()
@@ -46,11 +56,7 @@ namespace AxieEnergyCount
             }
             catch (Exception e)
             {
-                StreamWriter sw = new StreamWriter(Path.GetDirectoryName(Application.ExecutablePath) + @"\log.txt", true);
-                sw.WriteLine("[" + DateTime.Now + "] " + e.Message);
-                sw.Flush();
-                sw.Close();
-                MessageBox.Show("An error occurred, check log.txt file.", "Error");
+                LogAndErrors.ShowErrorTextWithExceptionMessage("An error occurred while reading AxieEnergyCount.ini, check log.txt file.", e, true);
                 return false;
             }
             finally
@@ -62,7 +68,7 @@ namespace AxieEnergyCount
 
     public class Configs
     {
-        public int BackgroundImage = 0;
+        public int BackgroundImageIndex = 0;
         public bool ResetWhenWL = true, AlwaysOnTop = true, NoBackground = false, EnableHotkeys = true, HideButtons = false;
         public Point WindowPosition = new Point(300, 300);
         public KeyBinds KeyBinds = new KeyBinds();
