@@ -48,6 +48,7 @@ namespace AxieEnergyCount
             this.BtnPlusWin = new System.Windows.Forms.Button();
             this.BtnResetWin = new System.Windows.Forms.Button();
             this.BtnMinusWin = new System.Windows.Forms.Button();
+            this.AddBackgroundSubmenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PicBoxBG1)).BeginInit();
             this.SuspendLayout();
@@ -69,6 +70,7 @@ namespace AxieEnergyCount
             // 
             this.OptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BackgroundSubmenuBtn,
+            this.AddBackgroundSubmenuBtn,
             this.ResetWhenWLSubmenuBtn,
             this.AlwaysOnTopSubmenuBtn,
             this.NoImageSubmenuBtn,
@@ -84,7 +86,7 @@ namespace AxieEnergyCount
             // 
             this.BackgroundSubmenuBtn.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundSubmenuBtn.Name = "BackgroundSubmenuBtn";
-            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.BackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.BackgroundSubmenuBtn.Text = "Background";
             this.BackgroundSubmenuBtn.Click += new System.EventHandler(this.BackgroundSubmenuBtn_Click);
             // 
@@ -94,7 +96,7 @@ namespace AxieEnergyCount
             this.ResetWhenWLSubmenuBtn.CheckOnClick = true;
             this.ResetWhenWLSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ResetWhenWLSubmenuBtn.Name = "ResetWhenWLSubmenuBtn";
-            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.ResetWhenWLSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.ResetWhenWLSubmenuBtn.Text = "Reset When W/L";
             this.ResetWhenWLSubmenuBtn.CheckedChanged += new System.EventHandler(this.ResetWhenWLSubmenuBtn_CheckedChanged);
             // 
@@ -104,7 +106,7 @@ namespace AxieEnergyCount
             this.AlwaysOnTopSubmenuBtn.CheckOnClick = true;
             this.AlwaysOnTopSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AlwaysOnTopSubmenuBtn.Name = "AlwaysOnTopSubmenuBtn";
-            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.AlwaysOnTopSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.AlwaysOnTopSubmenuBtn.Text = "Always on Top";
             this.AlwaysOnTopSubmenuBtn.CheckedChanged += new System.EventHandler(this.AlwaysOnTopSubmenuBtn_CheckedChanged);
             // 
@@ -112,7 +114,7 @@ namespace AxieEnergyCount
             // 
             this.NoImageSubmenuBtn.CheckOnClick = true;
             this.NoImageSubmenuBtn.Name = "NoImageSubmenuBtn";
-            this.NoImageSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.NoImageSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.NoImageSubmenuBtn.Text = "No Background";
             this.NoImageSubmenuBtn.CheckedChanged += new System.EventHandler(this.NoImageSubmenuBtn_CheckedChanged);
             // 
@@ -120,7 +122,7 @@ namespace AxieEnergyCount
             // 
             this.HideButtonsSubmenuBtn.CheckOnClick = true;
             this.HideButtonsSubmenuBtn.Name = "HideButtonsSubmenuBtn";
-            this.HideButtonsSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.HideButtonsSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.HideButtonsSubmenuBtn.Text = "Hide Buttons";
             this.HideButtonsSubmenuBtn.CheckedChanged += new System.EventHandler(this.HideButtonsSubmenuBtn_CheckedChanged);
             // 
@@ -130,7 +132,7 @@ namespace AxieEnergyCount
             this.HotkeysEnabledSubmenuBtn,
             this.HotkeysConfigureSubmenuBtn});
             this.HotkeysSubmenuBtn.Name = "HotkeysSubmenuBtn";
-            this.HotkeysSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.HotkeysSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.HotkeysSubmenuBtn.Text = "Hotkeys";
             // 
             // HotkeysEnabledSubmenuBtn
@@ -139,21 +141,21 @@ namespace AxieEnergyCount
             this.HotkeysEnabledSubmenuBtn.CheckOnClick = true;
             this.HotkeysEnabledSubmenuBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.HotkeysEnabledSubmenuBtn.Name = "HotkeysEnabledSubmenuBtn";
-            this.HotkeysEnabledSubmenuBtn.Size = new System.Drawing.Size(127, 22);
+            this.HotkeysEnabledSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.HotkeysEnabledSubmenuBtn.Text = "Enable";
             this.HotkeysEnabledSubmenuBtn.CheckedChanged += new System.EventHandler(this.HotkeysEnableSubmenuBtn_CheckedChanged);
             // 
             // HotkeysConfigureSubmenuBtn
             // 
             this.HotkeysConfigureSubmenuBtn.Name = "HotkeysConfigureSubmenuBtn";
-            this.HotkeysConfigureSubmenuBtn.Size = new System.Drawing.Size(127, 22);
+            this.HotkeysConfigureSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.HotkeysConfigureSubmenuBtn.Text = "Configure";
             this.HotkeysConfigureSubmenuBtn.Click += new System.EventHandler(this.HotkeysConfigureSubmenuBtn_Click);
             // 
             // ExitSubmenuBtn
             // 
             this.ExitSubmenuBtn.Name = "ExitSubmenuBtn";
-            this.ExitSubmenuBtn.Size = new System.Drawing.Size(161, 22);
+            this.ExitSubmenuBtn.Size = new System.Drawing.Size(180, 22);
             this.ExitSubmenuBtn.Text = "Exit";
             this.ExitSubmenuBtn.Click += new System.EventHandler(this.ExitSubmenuBtn_Click);
             // 
@@ -243,6 +245,13 @@ namespace AxieEnergyCount
             this.BtnMinusWin.UseVisualStyleBackColor = true;
             this.BtnMinusWin.Click += new System.EventHandler(this.BtnMinusWin_Click);
             // 
+            // AddBackgroundSubmenuBtn
+            // 
+            this.AddBackgroundSubmenuBtn.Name = "AddBackgroundSubmenuBtn";
+            this.AddBackgroundSubmenuBtn.Size = new System.Drawing.Size(180, 22);
+            this.AddBackgroundSubmenuBtn.Text = "Add Background";
+            this.AddBackgroundSubmenuBtn.Click += new System.EventHandler(this.AddBackgroundSubmenuBtn_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -291,6 +300,7 @@ namespace AxieEnergyCount
         private System.Windows.Forms.ToolStripMenuItem HotkeysEnabledSubmenuBtn;
         private System.Windows.Forms.ToolStripMenuItem HotkeysConfigureSubmenuBtn;
         private System.Windows.Forms.ToolStripMenuItem HideButtonsSubmenuBtn;
+        private System.Windows.Forms.ToolStripMenuItem AddBackgroundSubmenuBtn;
     }
 }
 

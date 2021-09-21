@@ -107,8 +107,8 @@ namespace AxieEnergyCount
 
         void BackgroundSetup()
         {
-            CacheController.config.BackgroundImage = (CacheController.config.BackgroundImage < 0 || CacheController.config.BackgroundImage >= BackgroundImages.Count) ? CacheController.defaultConfig.BackgroundImage : CacheController.config.BackgroundImage;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+            CacheController.config.BackgroundImageIndex = (CacheController.config.BackgroundImageIndex < 0 || CacheController.config.BackgroundImageIndex >= BackgroundImages.Count) ? CacheController.defaultConfig.BackgroundImageIndex : CacheController.config.BackgroundImageIndex;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
             int tabIndex = 50;
             foreach (Label label in customLabels)
             {
@@ -177,7 +177,7 @@ namespace AxieEnergyCount
             }
             else
             {
-                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
                 Size = defaultSize;
             }
             Refresh();
@@ -201,11 +201,16 @@ namespace AxieEnergyCount
 
         private void BackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            CacheController.config.BackgroundImage++;
-            if (CacheController.config.BackgroundImage >= BackgroundImages.Count)
-                CacheController.config.BackgroundImage = 0;
-            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImage];
+            CacheController.config.BackgroundImageIndex++;
+            if (CacheController.config.BackgroundImageIndex >= BackgroundImages.Count)
+                CacheController.config.BackgroundImageIndex = 0;
+            PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
             CacheController.Save();
+        }
+
+        private void AddBackgroundSubmenuBtn_Click(object sender, EventArgs e)
+        {
+            
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)

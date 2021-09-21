@@ -17,10 +17,10 @@ namespace AxieEnergyCount
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainWindow());
             }
-            catch
+            catch (Exception e)
             {
-                string str = "Something went wrong, make sure the program is outside of " + '"' + "Program Files" + '"' + " folder and its subfolders or run the program as an Administrator";
-                MessageBox.Show(str, "Error");
+                string errorText = "Something went wrong, make sure the program is outside of " + '"' + "Program Files" + '"' + " folder and its subfolders or run the program as an Administrator.";
+                LogAndErrors.ShowErrorTextWithExceptionMessage(errorText, e);
             }
         }
     }
