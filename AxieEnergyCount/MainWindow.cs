@@ -7,7 +7,7 @@ namespace AxieEnergyCount
 {
     public partial class MainWindow : Form
     {
-        readonly int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
+        const int StartGameEnergy = 3, EnergyPerTurn = 2, MinEnergy = 0, MaxEnergy = 10;
         readonly Size defaultSize = new Size(356, 400), noBackgroundSize = new Size(356, 202), noBackgroundAndNoButtonsSize = new Size(356, 150);
         int enemyEnergy = 3, wins = 0;
         List<Image> BackgroundImages = new List<Image>();
@@ -27,8 +27,8 @@ namespace AxieEnergyCount
             SetupCustomLabels();
             SetStartAttributes();
             InitializeComponent();
-            SetupLists();
             LoadCache();
+            SetupLists();
             BackgroundSetup();
         }
 
@@ -66,13 +66,20 @@ namespace AxieEnergyCount
             Icon = Properties.Resources.vanilla_icon;
         }
 
+        void LoadCache()
+        {
+            UserImage.LoadImages();
+            CacheController.GetCache();
+            CacheController.Save();
+        }
+
         void SetupLists()
         {
             //BackgroundImages
             BackgroundImages.Add(Properties.Resources.Image0);
             BackgroundImages.Add(Properties.Resources.Image1);
-            BackgroundImages.Add(Properties.Resources.Image2);
-            BackgroundImages.Add(Properties.Resources.Image3);
+            foreach (Image image in UserImage.UserImages)
+                BackgroundImages.Add(image);
             //ButtonDefaultPos
             buttonsPosition.Add(new Point(219, 280));
             buttonsPosition.Add(new Point(279, 280));
@@ -97,12 +104,6 @@ namespace AxieEnergyCount
             buttons.Add(BtnPlusWin);
             buttons.Add(BtnMinusWin);
             buttons.Add(BtnResetWin);
-        }
-
-        void LoadCache()
-        {
-            CacheController.GetCache();
-            CacheController.Save();
         }
 
         void BackgroundSetup()

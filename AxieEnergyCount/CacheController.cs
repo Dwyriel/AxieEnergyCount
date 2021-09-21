@@ -24,7 +24,6 @@ namespace AxieEnergyCount
             config = defaultConfig;
         }
 
-
         public static void Save()
         {
             FileStream outFile = File.Create(path);
@@ -73,8 +72,6 @@ namespace AxieEnergyCount
         public bool ResetWhenWL = true, AlwaysOnTop = true, NoBackground = false, EnableHotkeys = true, HideButtons = false;
         public Point WindowPosition = new Point(300, 300);
         public KeyBinds KeyBinds = new KeyBinds();
-        public List<string> UserBackgroundImagesPath = new List<string>();
-        public List<Image> UserBackgroundImages = new List<Image>();
     }
 
     public class KeyBinds
