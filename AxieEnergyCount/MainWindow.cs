@@ -243,6 +243,7 @@ namespace AxieEnergyCount
         private void NoImageSubmenuBtn_CheckedChanged(object sender, EventArgs e)
         {
             BackgroundSubmenuBtn.Enabled = !NoImageSubmenuBtn.Checked;
+            AddBackgroundSubmenuBtn.Enabled = !NoImageSubmenuBtn.Checked;
             SetButtonPos(!NoImageSubmenuBtn.Checked);
             ChangeSizeAndBG();
             CacheController.config.NoBackground = NoImageSubmenuBtn.Checked;
