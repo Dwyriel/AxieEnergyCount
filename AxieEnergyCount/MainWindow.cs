@@ -76,10 +76,7 @@ namespace AxieEnergyCount
         void SetupLists()
         {
             //BackgroundImages
-            BackgroundImages.Add(Properties.Resources.Image0);
-            BackgroundImages.Add(Properties.Resources.Image1);
-            foreach (Image image in UserImage.UserImages)
-                BackgroundImages.Add(image);
+            BackgroundImagesListSetup();
             //ButtonDefaultPos
             buttonsPosition.Add(new Point(219, 280));
             buttonsPosition.Add(new Point(279, 280));
@@ -104,6 +101,15 @@ namespace AxieEnergyCount
             buttons.Add(BtnPlusWin);
             buttons.Add(BtnMinusWin);
             buttons.Add(BtnResetWin);
+        }
+
+        void BackgroundImagesListSetup()
+        {
+            BackgroundImages = new List<Image>();
+            BackgroundImages.Add(Properties.Resources.Image0);
+            BackgroundImages.Add(Properties.Resources.Image1);
+            foreach (Image image in UserImage.UserImages)
+                BackgroundImages.Add(image);
         }
 
         void BackgroundSetup()
@@ -211,7 +217,14 @@ namespace AxieEnergyCount
 
         private void AddBackgroundSubmenuBtn_Click(object sender, EventArgs e)
         {
-            
+            if (UserImage.AddNewImage())
+            {
+                UserImage.LoadImages();
+                BackgroundImagesListSetup();
+                CacheController.config.BackgroundImageIndex = 0;
+                PicBoxBG1.Image = BackgroundImages[CacheController.config.BackgroundImageIndex];
+                MessageBox.Show("Background image has been reset");
+            }
         }
 
         private void ResetWhenWLSubmenuBtn_CheckedChanged(object sender, EventArgs e)

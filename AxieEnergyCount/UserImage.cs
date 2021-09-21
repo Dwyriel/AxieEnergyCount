@@ -16,9 +16,9 @@ namespace AxieEnergyCount
         {
             try
             {
-                ImagesDir = Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + FolderName);
-                if (!ImagesDir.Exists)
+                if (!Directory.Exists(Path.GetDirectoryName(Application.ExecutablePath) + FolderName))
                     return;
+                ImagesDir = Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + FolderName);
                 GetAllImageFiles(ImagesDir.GetFiles());
             }
             catch (Exception exception)
@@ -44,6 +44,32 @@ namespace AxieEnergyCount
                     continue;
                 UserImages.Add(image);
             }
+        }
+
+        public static bool AddNewImage()
+        {
+            FileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = "Images|*.png;*.jpeg;*.jpg;*.gif",
+                CheckFileExists = true,
+                Title = "Select Image"
+            };
+            DialogResult result = fileDialog.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                if (ImagesDir is null || !ImagesDir.Exists)
+                    ImagesDir = Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + FolderName);
+                FileInfo fileInfo = new FileInfo(fileDialog.FileName);
+                try
+                {
+                    File.Copy(fileInfo.FullName, ImagesDir.FullName + @"\" + fileInfo.Name);
+                    return true;
+                } catch (Exception exception)
+                {
+                    LogAndErrors.ShowErrorTextWithExceptionMessage("Error occurred when saving selected image", exception);
+                }
+            }
+            return false;
         }
     }
 }
